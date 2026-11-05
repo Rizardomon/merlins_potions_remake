@@ -7,7 +7,7 @@ import { InputWithIcon } from "@/components/ui/input";
 import { Pagination } from "@/components/ui/pagination";
 import { Table, THead, TBody, TR, TH, TD } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
-import type { Page } from "@app/shared";
+import type { Page } from "@merlins-potions-remake/shared";
 
 /** Tamanho de página padrão das tabelas de listagem. */
 export const TABLE_PAGE_SIZE = 12;

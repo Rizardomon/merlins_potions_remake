@@ -68,7 +68,7 @@ Componentes específicos de uma feature ficam em `src/components/<feature>/*`, n
 
 Três camadas, sempre nesta ordem — **tela → hook → repository → BFF → API**:
 
-- **Contrato**: os tipos de domínio vivem no `@app/shared` (Zod), compartilhados com o
+- **Contrato**: os tipos de domínio vivem no `@merlins-potions-remake/shared` (Zod), compartilhados com o
   backend. O front não redeclara tipo de domínio.
 - **Repository** em `src/lib/api/<dominio>-repository.ts`: `fetch` no BFF
   (`/api/<dominio>`) e **validação da resposta com o schema Zod**. É a única camada que
@@ -125,7 +125,7 @@ Depois que o domínio ganha módulo no `apps/server`, o caminho no front é semp
    `Authorization` entra quando houver auth (ver [auth.md](auth.md)).
    Modelo: `src/app/api/roles/route.ts`.
 2. **Repository** em `src/lib/api/<dominio>-repository.ts`: `fetch` no BFF, resposta validada
-   com o schema Zod de `@app/shared` (fonte única). Se o backend não pagina, monte o `Page<T>`
+   com o schema Zod de `@merlins-potions-remake/shared` (fonte única). Se o backend não pagina, monte o `Page<T>`
    aqui. Modelo: `src/lib/api/role-repository.ts`.
 3. **Hooks** em `src/hooks/use-app.ts`: `useQuery` para leitura, `useMutation` para escrita com
    `onSuccess` invalidando a chave do domínio (`queryClient.invalidateQueries({ queryKey: ["roles"] })`

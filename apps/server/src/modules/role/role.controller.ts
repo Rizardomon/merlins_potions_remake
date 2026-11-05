@@ -17,7 +17,7 @@ import {
   ApiTags,
 } from "@nestjs/swagger";
 import type { Request } from "express";
-import { CreateRoleSchema, RoleSchema, UpdateRoleSchema, type Role } from "@app/shared";
+import { CreateRoleSchema, RoleSchema, UpdateRoleSchema, type Role } from "@merlins-potions-remake/shared";
 import { actorOf, parse } from "../../common/http";
 import { toOpenApi, toOpenApiArray } from "../../common/openapi";
 import { RoleService } from "./role.service";

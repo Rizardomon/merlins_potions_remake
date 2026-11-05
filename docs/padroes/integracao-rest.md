@@ -28,7 +28,7 @@ apps/server/src/
   integrations/
     <system>/                       # nome do sistema externo, singular (ex.: jira)
       <system>.client.ts            # cliente HTTP puro: monta request, auth, timeout, parse cru
-      <system>.mapper.ts            # payload cru (Zod lenient) → contrato @app/shared
+      <system>.mapper.ts            # payload cru (Zod lenient) → contrato @merlins-potions-remake/shared
       <system>.service.ts           # orquestra: client → mapper → domínio (upsert/import)
       <system>.controller.ts        # (opcional) expõe listagem/gatilho ao front via /api/...
       <system>.module.ts
@@ -45,7 +45,7 @@ packages/shared/src/
   sem dep nova). Responsável por: base URL, headers de **auth/token**, **timeout** (`AbortSignal.timeout`),
   paginação, e devolver o **JSON cru** (ainda não validado). Não conhece o contrato do shared.
 - **Mapper** (`<system>.mapper.ts`) — valida o cru com um **Zod lenient** (`.passthrough()`, campos
-  opcionais tolerantes ao que a origem manda) e traduz para o **contrato `@app/shared`**. Sem I/O.
+  opcionais tolerantes ao que a origem manda) e traduz para o **contrato `@merlins-potions-remake/shared`**. Sem I/O.
 - **Service** (`<system>.service.ts`) — orquestra: chama o client, passa pelo mapper, e delega ao
   **módulo dono** (ex.: `ProjectService.importFromExternal` / `ClientRepository.upsertByExternalId`).
   Idempotência por **`externalId`** (upsert), nunca duplica.

@@ -20,7 +20,7 @@ importers:
 
   apps/server:
     dependencies:
-      '@app/shared':
+      '@merlins-potions-remake/shared':
         specifier: workspace:*
         version: link:../../packages/shared
       '@nestjs/common':
@@ -84,7 +84,7 @@ importers:
 
   apps/web:
     dependencies:
-      '@app/shared':
+      '@merlins-potions-remake/shared':
         specifier: workspace:*
         version: link:../../packages/shared
       '@tanstack/react-query':

@@ -1,6 +1,6 @@
 import { Controller, Get } from "@nestjs/common";
 import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
-import { MenuSectionSchema, type Menu } from "@app/shared";
+import { MenuSectionSchema, type Menu } from "@merlins-potions-remake/shared";
 import { toOpenApiArray } from "../../common/openapi";
 import { MenuService } from "./menu.service";
 

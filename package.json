@@ -1,5 +1,5 @@
 {
-  "name": "app-template",
+  "name": "merlins-potions-remake",
   "version": "0.0.0",
   "private": true,
   "packageManager": "pnpm@10.32.1",
@@ -9,8 +9,8 @@
   "scripts": {
     "dev": "turbo run dev",
     "dev:all": "bash scripts/dev-all.sh",
-    "dev:server": "pnpm --filter @app/server dev",
-    "dev:web": "pnpm --filter @app/web dev",
+    "dev:server": "pnpm --filter @merlins-potions-remake/server dev",
+    "dev:web": "pnpm --filter @merlins-potions-remake/web dev",
     "build": "turbo run build",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",

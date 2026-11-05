@@ -37,7 +37,7 @@ projeto — mantendo as regras de trabalho abaixo.
    português. Arquivos `kebab-case`; componentes/tipos `PascalCase`; hooks `useX`;
    funções/vars `camelCase`. Tabela no **singular**, rota no **plural**.
 
-3. **O contrato é o Zod do `@app/shared`.** Não duplique tipos de domínio no front nem no
+3. **O contrato é o Zod do `@merlins-potions-remake/shared`.** Não duplique tipos de domínio no front nem no
    back. O backend valida a entrada com ele; o frontend valida a resposta com ele.
 
 4. **Respeite as camadas.** Backend: `controller → service → repository` — o controller

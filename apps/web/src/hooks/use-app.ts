@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import type { CreateRoleInput, UpdateRoleInput } from "@app/shared";
+import type { CreateRoleInput, UpdateRoleInput } from "@merlins-potions-remake/shared";
 import { menuApi } from "@/lib/api/menu-repository";
 import { roleApi } from "@/lib/api/role-repository";
 

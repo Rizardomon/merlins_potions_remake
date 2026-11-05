@@ -20,7 +20,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "App Template",
+  title: "Merlin's Potions Remake",
   description: "Template NestJS + Next.js",
 };
 

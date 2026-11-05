@@ -5,11 +5,11 @@ import {
   type Page,
   type Role,
   type UpdateRoleInput,
-} from "@app/shared";
+} from "@merlins-potions-remake/shared";
 
 /**
  * Data-access do catálogo de papéis: fala com o BFF (`/api/roles`), valida a resposta
- * com o contrato Zod do `@app/shared` e devolve dados já tipados.
+ * com o contrato Zod do `@merlins-potions-remake/shared` e devolve dados já tipados.
  *
  * As telas nunca chamam `fetch` direto — elas consomem os hooks de `hooks/use-app.ts`,
  * que por sua vez consomem este repository. Assim a origem dos dados é um detalhe

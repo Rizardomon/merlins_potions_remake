@@ -13,14 +13,14 @@ RUN corepack enable
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json tsconfig.base.json ./
 COPY packages/shared/package.json ./packages/shared/
 COPY apps/server/package.json ./apps/server/
-RUN pnpm install --frozen-lockfile --filter @app/server... --filter @app/shared
+RUN pnpm install --frozen-lockfile --filter @merlins-potions-remake/server... --filter @merlins-potions-remake/shared
 
 COPY packages/shared/ ./packages/shared/
 COPY apps/server/ ./apps/server/
-RUN pnpm --filter @app/shared build && pnpm --filter @app/server build
+RUN pnpm --filter @merlins-potions-remake/shared build && pnpm --filter @merlins-potions-remake/server build
 
 # Sobra só o necessário p/ rodar (o shared entra como dependência do workspace).
-RUN pnpm --filter @app/server --prod deploy --legacy /out
+RUN pnpm --filter @merlins-potions-remake/server --prod deploy --legacy /out
 
 # ---------- runtime ----------
 FROM node:20-bookworm-slim AS runtime

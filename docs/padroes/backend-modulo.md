@@ -44,7 +44,7 @@ packages/shared/src/
 - **Rota do domínio no plural**: `/api/plans`.
 
 ### Contrato (DTOs)
-- A **fonte única** dos tipos/DTOs é o Zod em `@app/shared` (`packages/shared/src/<domain>.ts`),
+- A **fonte única** dos tipos/DTOs é o Zod em `@merlins-potions-remake/shared` (`packages/shared/src/<domain>.ts`),
   compartilhado com o front. Não há arquivo de DTO dentro do módulo.
 - Padrão de export por domínio: `<Entity>Schema`, `Create<Entity>Schema`,
   `Update<Entity>Schema` (+ tipos inferidos) e, quando útil, `<Entity>ListSchema`.

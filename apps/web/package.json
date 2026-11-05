@@ -1,5 +1,5 @@
 {
-  "name": "@app/web",
+  "name": "@merlins-potions-remake/web",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@app/shared": "workspace:*",
+    "@merlins-potions-remake/shared": "workspace:*",
     "@tanstack/react-query": "^5.62.7",
     "clsx": "^2.1.1",
     "lucide-react": "^1.22.0",

@@ -16,7 +16,7 @@ async function bootstrap() {
 
   if (config.getOrThrow<boolean>("SWAGGER_ENABLED")) {
     const swaggerConfig = new DocumentBuilder()
-      .setTitle("App Template API")
+      .setTitle("Merlin's Potions Remake API")
       .setDescription("API do template NestJS + Next.js")
       .setVersion("0.1.0")
       .build();
@@ -27,7 +27,7 @@ async function bootstrap() {
   const port = config.getOrThrow<number>("API_PORT");
   await app.listen(port, "0.0.0.0");
   // eslint-disable-next-line no-console
-  console.log(`[app-server] up on :${port}/api`);
+  console.log(`[merlins-potions-remake-server] up on :${port}/api`);
 }
 
 bootstrap();

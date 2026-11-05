@@ -22,9 +22,9 @@ ela não é um módulo do app — não está no `app.module.ts`.
    controller ficam intactos.
 6. Gere e aplique a migration:
    ```bash
-   pnpm --filter @app/server db:generate   # gera o .sql versionado (commite-o)
-   pnpm --filter @app/server build
-   pnpm --filter @app/server db:migrate    # aplica
+   pnpm --filter @merlins-potions-remake/server db:generate   # gera o .sql versionado (commite-o)
+   pnpm --filter @merlins-potions-remake/server build
+   pnpm --filter @merlins-potions-remake/server db:migrate    # aplica
    ```
    `example.migration.sql` mostra o formato do arquivo gerado. Ver
    `docs/padroes/migrations.md`.

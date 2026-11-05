@@ -27,7 +27,7 @@ coleção; `PUT`/`DELETE` em `[id]/route.ts`. O browser nunca chama a API NestJS
 (ver [auth.md](auth.md)).
 
 ### 4. Data-access — `apps/web/src/lib/api/<dominio>-repository.ts`
-`fetch` no BFF, **validando a resposta com o schema Zod do `@app/shared`**. Exponha
+`fetch` no BFF, **validando a resposta com o schema Zod do `@merlins-potions-remake/shared`**. Exponha
 métodos de domínio (`listX`, `createX`, `updateX`, `deleteX`). Se o backend não pagina,
 mantenha o `Page<T>` filtrando/paginando no client. Modelo: `role-repository.ts`.
 
@@ -82,7 +82,7 @@ Reutilizáveis entre telas → `src/components/common/*`. Componentes que só pe
 ## Definition of Done
 - [ ] Contrato, módulo do backend, BFF, repository, hook, tela e menu criados.
 - [ ] Tela depende só do hook (nunca do repository ou de `fetch` direto).
-- [ ] Resposta da API validada com o Zod do `@app/shared`.
+- [ ] Resposta da API validada com o Zod do `@merlins-potions-remake/shared`.
 - [ ] Loading via `Skeleton`; sem hex hardcoded (só tokens/utilitários).
 - [ ] Nomenclatura EN no código / PT na UI.
 - [ ] `pnpm typecheck` sem erros.

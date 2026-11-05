@@ -44,7 +44,7 @@ export function Sidebar({
           </div>
           {!collapsed && (
             <span className="truncate text-[15px] font-extrabold tracking-tight text-content">
-              App Template
+              Merlin's Potions Remake
             </span>
           )}
         </div>

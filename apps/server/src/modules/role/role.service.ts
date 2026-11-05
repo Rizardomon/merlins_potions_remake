@@ -1,5 +1,5 @@
 import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
-import type { CreateRoleInput, Role, UpdateRoleInput } from "@app/shared";
+import type { CreateRoleInput, Role, UpdateRoleInput } from "@merlins-potions-remake/shared";
 import { RoleRepository, type RoleRow } from "./role.repository";
 
 /**

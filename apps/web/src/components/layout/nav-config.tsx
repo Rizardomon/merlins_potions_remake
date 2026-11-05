@@ -11,7 +11,7 @@ import {
   Users,
   type LucideIcon,
 } from "lucide-react";
-import type { Menu } from "@app/shared";
+import type { Menu } from "@merlins-potions-remake/shared";
 
 /**
  * Navegação da sidebar/topbar.
@@ -113,5 +113,5 @@ export function metaForPath(
   const key = Object.keys(pageMeta)
     .filter((p) => pathname.startsWith(p))
     .sort((a, b) => b.length - a.length)[0];
-  return key ? pageMeta[key] : { title: "App Template", subtitle: "" };
+  return key ? pageMeta[key] : { title: "Merlin's Potions Remake", subtitle: "" };
 }

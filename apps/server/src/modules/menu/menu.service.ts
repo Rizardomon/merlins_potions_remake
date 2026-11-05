@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import type { Menu, MenuSection } from "@app/shared";
+import type { Menu, MenuSection } from "@merlins-potions-remake/shared";
 import { MenuRepository, type MenuItemRow } from "./menu.repository";
 
 /**

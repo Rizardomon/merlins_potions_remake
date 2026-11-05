@@ -1,4 +1,4 @@
-import { MenuSchema, type Menu } from "@app/shared";
+import { MenuSchema, type Menu } from "@merlins-potions-remake/shared";
 
 /** Data-access do menu de navegação (alimenta a sidebar e os títulos da topbar). */
 export const menuApi = {

@@ -7,7 +7,7 @@ import { IconButton } from "@/components/ui/icon-button";
 import { DataTableCard, type DataColumn } from "@/components/common/data-table-card";
 import { DescriptionFormModal } from "@/components/common/description-form-modal";
 import { ConfirmDialog } from "@/components/common/confirm-dialog";
-import type { Page } from "@app/shared";
+import type { Page } from "@merlins-potions-remake/shared";
 
 /** Item de catálogo (papel, tipo de despesa, …). `code` só existe em quem o expõe (`showCode`). */
 export type CatalogItem = { id: string; code?: number; name: string };

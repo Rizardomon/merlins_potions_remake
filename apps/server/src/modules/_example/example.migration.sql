@@ -1,7 +1,7 @@
 -- REFERÊNCIA — formato de uma migration versionada.
 --
 -- Você NÃO escreve este arquivo à mão nem o coloca aqui: ele é gerado por
--- `pnpm --filter @app/server db:generate` a partir das entities e nasce em
+-- `pnpm --filter @merlins-potions-remake/server db:generate` a partir das entities e nasce em
 -- `src/database/migrations/<seq>_<nome>.sql`, junto com o snapshot em `meta/`.
 -- Este exemplo mostra apenas o que esperar da saída. Ver docs/padroes/migrations.md.
 --
