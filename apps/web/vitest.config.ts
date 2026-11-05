@@ -14,7 +14,14 @@ export default defineConfig({
     include: ["src/**/*.test.{ts,tsx}"],
     coverage: {
       provider: "v8",
-      include: ["src/app/providers.tsx", "src/lib/theme.ts", "src/test/local-storage-mock.ts"],
+      include: [
+        "src/app/providers.tsx",
+        "src/lib/theme.ts",
+        "src/test/local-storage-mock.ts",
+        "src/app/api/products/route.ts",
+        "src/lib/api/product-repository.ts",
+        "src/hooks/use-app.ts",
+      ],
       thresholds: { lines: 80, functions: 80, branches: 80, statements: 80 },
     },
   },
