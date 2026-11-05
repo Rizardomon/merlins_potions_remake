@@ -5,6 +5,7 @@ import type { Potion } from "@merlins-potions-remake/shared";
 import { usePotions } from "@/hooks/use-app";
 import { filterPotions, sortPotions, type SortKey } from "@/lib/catalog/filter-sort";
 import { PotionCard } from "./potion-card";
+import { DetailDrawer } from "./detail-drawer";
 
 const SORT_OPTIONS: { key: SortKey; label: string }[] = [
   { key: "featured", label: "Featured" },
@@ -20,6 +21,18 @@ export function CatalogSection({ onSelectPotion }: CatalogSectionProps) {
   const { data: potions = [], isLoading } = usePotions();
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<SortKey>("featured");
+  const [selectedPotion, setSelectedPotion] = useState<Potion | null>(null);
+  const [detailOpen, setDetailOpen] = useState(false);
+
+  function handleSelectPotion(potion: Potion) {
+    setSelectedPotion(potion);
+    setDetailOpen(true);
+    onSelectPotion?.(potion);
+  }
+
+  function handleCloseDetail() {
+    setDetailOpen(false);
+  }
 
   const filtered = filterPotions(potions, query);
   const displayed = sortPotions(filtered, sort);
@@ -97,11 +110,16 @@ export function CatalogSection({ onSelectPotion }: CatalogSectionProps) {
             <PotionCard
               key={potion.id}
               potion={potion}
-              onSelect={onSelectPotion ?? (() => {})}
+              onSelect={handleSelectPotion}
             />
           ))}
         </div>
       )}
+      <DetailDrawer
+        open={detailOpen}
+        onClose={handleCloseDetail}
+        potion={selectedPotion}
+      />
     </section>
   );
 }
