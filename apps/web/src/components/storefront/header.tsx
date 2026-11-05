@@ -6,7 +6,7 @@ export function Header() {
   const { itemCount, openBag } = useBag();
 
   return (
-    <header className="max-w-[1280px] mx-auto px-4 sm:px-8 py-5 flex flex-wrap items-center gap-x-8 gap-y-5">
+    <header className="w-full max-w-[1280px] mx-auto px-4 sm:px-8 py-5 flex flex-wrap items-center gap-x-8 gap-y-5">
       {/* Brand */}
       <a
         href="/"
