@@ -1,0 +1,24 @@
+{
+  "name": "app-template",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@10.32.1",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "dev:all": "bash scripts/dev-all.sh",
+    "dev:server": "pnpm --filter @app/server dev",
+    "dev:web": "pnpm --filter @app/web dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "rename": "node scripts/rename-project.mjs"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0",
+    "turbo": "^2.3.3",
+    "typescript": "^5.7.2"
+  }
+}

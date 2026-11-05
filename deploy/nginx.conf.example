@@ -1,0 +1,54 @@
+# Proxy reverso do host — server blocks de exemplo. Ajuste domínios e certificados.
+#
+# Copie para /etc/nginx/sites-available/<app>, crie o symlink em sites-enabled,
+# e valide com `nginx -t && systemctl reload nginx`.
+
+# ---------- Frontend (Next.js) ----------
+server {
+    listen 443 ssl;
+    server_name app.exemplo.com.br;
+
+    ssl_certificate     /etc/nginx/ssl/app.crt;
+    ssl_certificate_key /etc/nginx/ssl/app.key;
+
+    location / {
+        # <host-da-app> = onde os containers rodam; :3000 é a WEB_PORT publicada.
+        proxy_pass http://<host-da-app>:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Host              $host;
+        proxy_set_header X-Real-IP         $remote_addr;
+        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+        # Sem este header o Express (com `trust proxy`) trata a requisição como http
+        # e monta redirects/URLs absolutas erradas.
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Upgrade           $http_upgrade;
+        proxy_set_header Connection        "upgrade";
+    }
+}
+
+# ---------- API (NestJS) ----------
+# Só publique a API se algo fora do compose precisar chamá-la: o frontend fala com ela
+# pela rede interna do Docker, não por aqui.
+server {
+    listen 443 ssl;
+    server_name api.exemplo.com.br;
+
+    ssl_certificate     /etc/nginx/ssl/api.crt;
+    ssl_certificate_key /etc/nginx/ssl/api.key;
+
+    location / {
+        proxy_pass http://<host-da-app>:3001;
+        proxy_http_version 1.1;
+        proxy_set_header Host              $host;
+        proxy_set_header X-Real-IP         $remote_addr;
+        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
+# Redirect http → https
+server {
+    listen 80;
+    server_name app.exemplo.com.br api.exemplo.com.br;
+    return 301 https://$host$request_uri;
+}

@@ -1,0 +1,65 @@
+# Stack da aplicação (web + server).
+#
+#   docker compose --env-file deploy/app.env -f deploy/docker-compose.yml up -d --build
+#
+# O Postgres NÃO está aqui: aponte a DATABASE_URL para o banco do seu ambiente. Se preferir
+# subir um Postgres junto, acrescente o serviço e uma rede compartilhada.
+#
+# `BIND_ADDR` controla onde as portas são publicadas. Use `127.0.0.1` quando houver um proxy
+# reverso na MESMA máquina; um IP da LAN só quando o proxy estiver em outra — e nesse caso o
+# firewall precisa liberar as portas APENAS para o IP do proxy, senão qualquer um na rede
+# alcança os containers direto e contorna o proxy.
+
+# Nome do projeto compose: sem isso ele viria da pasta (`deploy`), e os containers sairiam
+# como `deploy-server-1` / `deploy-web-1`.
+name: app
+
+services:
+  # Aplica as migrations versionadas (Drizzle) e SAI. Usa a mesma imagem do server, mas roda
+  # o runner. O `server` só sobe após este sair com sucesso.
+  #
+  # Descomente quando o projeto tiver banco (ver apps/server/src/modules/_example/).
+  # migrate:
+  #   build:
+  #     context: ..
+  #     dockerfile: apps/server/Dockerfile
+  #   image: app-server:${TAG:-latest}
+  #   container_name: app-migrate
+  #   restart: "no"
+  #   command: ["node", "dist/database/migrate.js"]
+  #   environment:
+  #     NODE_ENV: production
+  #     DATABASE_URL: ${DATABASE_URL}
+
+  server:
+    build:
+      context: ..
+      dockerfile: apps/server/Dockerfile
+    image: app-server:${TAG:-latest}
+    container_name: app-api
+    restart: unless-stopped
+    # depends_on:
+    #   migrate:
+    #     condition: service_completed_successfully
+    ports: ["${BIND_ADDR:-127.0.0.1}:${SERVER_PORT:-3001}:3001"]
+    environment:
+      NODE_ENV: production
+      API_PORT: 3001
+      # Origem do web liberada no CORS.
+      WEB_ORIGIN: ${WEB_ORIGIN}
+      # DATABASE_URL: ${DATABASE_URL}
+      SWAGGER_ENABLED: ${SWAGGER_ENABLED:-false}
+
+  web:
+    build:
+      context: ..
+      dockerfile: apps/web/Dockerfile
+    image: app-web:${TAG:-latest}
+    container_name: app-web
+    restart: unless-stopped
+    depends_on: [server]
+    ports: ["${BIND_ADDR:-127.0.0.1}:${WEB_PORT:-3000}:3000"]
+    environment:
+      NODE_ENV: production
+      # Rede interna do compose: o browser NUNCA fala com o server direto — só o BFF do Next.
+      API_URL: http://server:3001/api
