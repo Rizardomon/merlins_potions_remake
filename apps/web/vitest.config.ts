@@ -10,10 +10,11 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "happy-dom",
+    setupFiles: ["src/test/setup.ts"],
     include: ["src/**/*.test.{ts,tsx}"],
     coverage: {
       provider: "v8",
-      include: ["src/app/providers.tsx", "src/lib/theme.ts"],
+      include: ["src/app/providers.tsx", "src/lib/theme.ts", "src/test/local-storage-mock.ts"],
       thresholds: { lines: 80, functions: 80, branches: 80, statements: 80 },
     },
   },
