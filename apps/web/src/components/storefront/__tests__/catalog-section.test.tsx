@@ -132,7 +132,7 @@ describe("CatalogSection", () => {
     fireEvent.click(addBtn);
     expect(mockDispatch).toHaveBeenCalledWith({
       type: "add",
-      payload: { potion: makePotions()[0], quantity: 1 },
+      payload: { product: makePotions()[0], quantity: 1 },
     });
     expect(onSelect).not.toHaveBeenCalled();
   });

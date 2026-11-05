@@ -188,7 +188,7 @@ describe("DetailDrawer", () => {
       fireEvent.click(screen.getByRole("button", { name: /add to bag/i }));
       expect(dispatch).toHaveBeenCalledWith({
         type: "add",
-        payload: { potion, quantity: 2 },
+        payload: { product: potion, quantity: 2 },
       });
     });
 

@@ -12,9 +12,9 @@ export function AddToBagToast() {
       role="status"
       aria-live="polite"
       aria-atomic="true"
-      className="fixed bottom-6 right-6 z-[60] flex items-center gap-3 rounded-lg bg-[var(--surface)] border border-[var(--border)] shadow-lg px-4 py-3"
+      className="fixed left-1/2 bottom-7 -translate-x-1/2 z-[70] flex items-center gap-3.5 rounded-full bg-[var(--text)] text-[var(--bg)] px-[22px] py-3.5 text-sm shadow-[0_18px_40px_-16px_rgba(31,26,38,0.5)]"
     >
-      <span className="text-sm text-[var(--text)]">
+      <span className="text-sm">
         {toastQuantity} × Potion added
       </span>
       <button
@@ -23,7 +23,7 @@ export function AddToBagToast() {
           dismissToast();
           openBag();
         }}
-        className="text-sm font-medium text-[var(--accent)] hover:text-[var(--accent-strong)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] rounded"
+        className="text-sm font-semibold text-[var(--accent-soft)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] rounded"
       >
         View bag
       </button>

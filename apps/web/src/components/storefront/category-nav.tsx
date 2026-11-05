@@ -15,10 +15,10 @@ const CATEGORIES: Category[] = [
 
 export function CategoryNav() {
   return (
-    <nav aria-label="Product categories">
+    <nav aria-label="Product categories" className="border-y border-[var(--border)]">
       <ul
         role="list"
-        className="flex gap-1 overflow-x-auto px-4 sm:px-6 py-2 max-w-7xl mx-auto"
+        className="max-w-[1280px] mx-auto px-4 sm:px-8 flex gap-8 overflow-x-auto"
         style={{ scrollbarWidth: "none" }}
       >
         {CATEGORIES.map((cat) => (
@@ -26,7 +26,7 @@ export function CategoryNav() {
             {cat.active ? (
               <span
                 aria-current="page"
-                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-md text-sm font-medium bg-[var(--accent)] text-white whitespace-nowrap"
+                className="inline-block py-4 text-[15px] font-semibold text-[var(--text)] border-b-2 border-[var(--accent)] whitespace-nowrap"
               >
                 {cat.label}
               </span>
@@ -35,14 +35,14 @@ export function CategoryNav() {
                 aria-disabled="true"
                 data-category={cat.label.toLowerCase()}
                 className={[
-                  "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium whitespace-nowrap cursor-default select-none",
+                  "inline-flex items-center gap-1.5 py-4 text-[15px] whitespace-nowrap cursor-default select-none border-b-2 border-transparent",
                   cat.highlight
-                    ? "text-[var(--red)] bg-[var(--red-soft)]"
-                    : "text-[var(--text-2)] bg-[var(--surface-3)]",
+                    ? "font-semibold text-[var(--accent)]"
+                    : "font-medium text-[var(--text-2)]",
                 ].join(" ")}
               >
                 {cat.label}
-                <span className="text-[10px] font-semibold uppercase tracking-wide opacity-70">
+                <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--text-3)]">
                   Soon
                 </span>
               </span>

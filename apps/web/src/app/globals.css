@@ -8,20 +8,20 @@
    =================================================================== */
 :root {
   color-scheme: light;
-  --bg: #f4f2ee;
-  --surface: #ffffff;
-  --surface-2: #faf9f6;
-  --surface-3: #f1efe9;
-  --border: #e9e5dd;
-  --border-strong: #dcd7cc;
-  --text: #1b1813;
-  --text-2: #6e685d;
-  --text-3: #9c958a;
-  --accent: #7c3aed;
-  --accent-strong: #6d28d9;
-  --accent-soft: #ede9fe;
-  --accent-text: #5b21b6;
-  --ring: rgba(124, 58, 237, 0.26);
+  --bg: #f5f2ec;
+  --surface: #fbf9f5;
+  --surface-2: #fbf9f5;
+  --surface-3: #ece8e1;
+  --border: #e3ddd3;
+  --border-strong: #cfc8be;
+  --text: #1f1a26;
+  --text-2: #4a4352;
+  --text-3: #6e6676;
+  --accent: #4b2e83;
+  --accent-strong: #3b2268;
+  --accent-soft: #d9c7f2;
+  --accent-text: #4b2e83;
+  --ring: rgba(75, 46, 131, 0.3);
   --green: #15924c;
   --green-soft: #e1f2e6;
   --red: #d2433a;
@@ -39,8 +39,8 @@
   body {
     background: var(--bg);
     color: var(--text);
-    font-size: 14px;
-    line-height: 1.45;
+    font-size: 16px;
+    line-height: 1.5;
     -webkit-font-smoothing: antialiased;
   }
   ::selection {

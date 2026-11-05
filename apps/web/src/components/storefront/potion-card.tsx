@@ -18,7 +18,7 @@ export function PotionCard({ potion, onSelect }: PotionCardProps) {
 
   function handleAddToBag(e: React.MouseEvent) {
     e.stopPropagation();
-    dispatch({ type: "add", payload: { potion, quantity: 1 } });
+    dispatch({ type: "add", payload: { product: potion, quantity: 1 } });
   }
 
   return (
@@ -30,52 +30,49 @@ export function PotionCard({ potion, onSelect }: PotionCardProps) {
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") onSelect(potion);
       }}
-      className="group cursor-pointer rounded-xl border border-[var(--border)] bg-[var(--surface)] overflow-hidden flex flex-col hover:shadow-md transition-shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
+      className="cursor-pointer flex flex-col rounded-[20px] overflow-hidden transition-[transform,box-shadow] duration-[250ms] ease-out hover:-translate-y-1 hover:shadow-[0_18px_40px_-20px_rgba(31,26,38,0.35)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
+      style={{ backgroundColor: potion.tint }}
     >
-      {/* Image area with tint */}
-      <div
-        className="relative h-48 flex items-center justify-center"
-        style={{ backgroundColor: potion.tint }}
-      >
-        <span className="absolute top-3 left-3 text-xs font-mono font-semibold text-white/80 bg-black/20 rounded px-1.5 py-0.5">
-          #{String(potion.number).padStart(2, "0")}
+      {/* Image */}
+      <div className="relative aspect-square flex items-center justify-center p-7">
+        <span className="absolute top-[18px] left-5 font-mono text-xs tracking-[0.08em] text-[var(--text-2)]">
+          No. {String(potion.number).padStart(2, "0")}
         </span>
         <Image
-          src={`/products/${potion.image}`}
+          src={potion.image}
           alt={potion.name}
-          width={120}
-          height={120}
-          className="object-contain drop-shadow-lg"
+          width={240}
+          height={240}
+          className="max-w-[78%] max-h-full w-auto h-auto object-contain drop-shadow-[0_16px_18px_rgba(31,26,38,0.18)]"
         />
       </div>
 
       {/* Content */}
-      <div className="flex flex-col flex-1 p-4 gap-2">
-        <div className="flex items-start justify-between gap-2">
-          <h3 className="font-display font-semibold text-[var(--text)] leading-tight">
+      <div className="px-5 pb-5 flex flex-col gap-1.5">
+        <div className="flex items-baseline justify-between gap-3">
+          <h3 className="font-display text-[28px] leading-[1.1] text-[var(--text)]">
             {potion.name}
           </h3>
-          <span className="text-sm font-semibold text-[var(--accent)] shrink-0">
+          <span className="font-mono text-[15px] font-medium whitespace-nowrap text-[var(--text)]">
             {formatPrice(potion.priceCents)}
           </span>
         </div>
 
-        <p className="text-xs text-[var(--text-2)] leading-relaxed line-clamp-2">
-          {potion.effect}
-        </p>
+        <p className="text-sm leading-[1.45] text-[var(--text-2)]">{potion.effect}</p>
 
-        <p className="text-xs text-[var(--text-3)]">
-          {potion.ingredients.length} ingredient{potion.ingredients.length !== 1 ? "s" : ""}
-        </p>
-
-        <button
-          type="button"
-          onClick={handleAddToBag}
-          aria-label={`Add ${potion.name} to bag`}
-          className="mt-auto w-full py-2 text-sm font-medium rounded-md bg-[var(--accent)] text-white hover:bg-[var(--accent-strong)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] transition-colors"
-        >
-          Add to bag
-        </button>
+        <div className="flex items-center justify-between mt-3">
+          <span className="text-[13px] text-[var(--text-2)]">
+            {potion.ingredients.length} ingredient{potion.ingredients.length !== 1 ? "s" : ""}
+          </span>
+          <button
+            type="button"
+            onClick={handleAddToBag}
+            aria-label={`Add ${potion.name} to bag`}
+            className="h-9 px-4 rounded-full bg-[var(--text)] text-[var(--bg)] text-[13px] font-medium hover:bg-[var(--accent)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] transition-colors"
+          >
+            Add to bag
+          </button>
+        </div>
       </div>
     </article>
   );

@@ -25,21 +25,23 @@ export function NewsletterBlock() {
   return (
     <section
       aria-label="Newsletter signup"
-      className="bg-[var(--surface-3)] border-t border-[var(--border)] py-12 px-4 sm:px-6"
+      className="max-w-[1280px] mx-auto w-full px-4 sm:px-8 pb-16"
     >
-      <div className="max-w-md mx-auto text-center">
-        <h2 className="font-display text-2xl font-semibold text-[var(--text)] mb-2">
-          Stay in the loop
-        </h2>
-        <p className="text-sm text-[var(--text-2)] mb-6">
-          Owl-post updates on new potions and special offers.
-        </p>
+      <div className="bg-[var(--text)] text-[var(--bg)] rounded-[28px] p-[clamp(32px,5vw,64px)] grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-8 items-center">
+        <div className="flex flex-col gap-3">
+          <h2 className="font-display font-normal text-[clamp(36px,4vw,52px)] leading-none">
+            Sign up for our <em className="italic text-[var(--accent-soft)]">newsletter</em>
+          </h2>
+          <p className="text-base text-[#cfc8d6]">
+            Exclusive discounts, new brews and seasonal restocks.
+          </p>
+        </div>
 
         {submitted ? (
           <p
             role="status"
             aria-live="polite"
-            className="text-sm font-medium text-[var(--green)]"
+            className="text-[17px] text-[var(--bg)]"
           >
             You&apos;re on the list. Watch your inbox for owl post.
           </p>
@@ -47,9 +49,9 @@ export function NewsletterBlock() {
           <form
             onSubmit={handleSubmit}
             noValidate
-            className="flex flex-col sm:flex-row gap-2"
+            className="flex flex-wrap gap-2.5"
           >
-            <div className="flex-1">
+            <div className="flex-[1_1_220px]">
               <label htmlFor="newsletter-email" className="sr-only">
                 Email address
               </label>
@@ -59,16 +61,16 @@ export function NewsletterBlock() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 onBlur={() => setTouched(true)}
-                placeholder="your@email.com"
+                placeholder="Enter your email"
                 aria-invalid={invalid}
                 aria-describedby={invalid ? "newsletter-email-error" : undefined}
-                className="w-full px-3 py-2 rounded-md border text-sm text-[var(--text)] bg-[var(--surface)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)] focus:border-[var(--accent)] border-[var(--border)]"
+                className="w-full h-[52px] px-[22px] rounded-full border border-[var(--text-2)] bg-[#2a2432] text-[15px] text-[var(--bg)] placeholder:text-[var(--text-3)] outline-none focus:ring-2 focus:ring-[var(--accent-soft)]"
               />
               {invalid && (
                 <p
                   id="newsletter-email-error"
                   role="alert"
-                  className="mt-1 text-xs text-[var(--red)] text-left"
+                  className="mt-1.5 pl-[22px] text-xs text-[#f3b4ae] text-left"
                 >
                   Please enter a valid email address.
                 </p>
@@ -76,7 +78,7 @@ export function NewsletterBlock() {
             </div>
             <button
               type="submit"
-              className="px-4 py-2 rounded-md bg-[var(--accent)] text-white text-sm font-medium hover:bg-[var(--accent-strong)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] shrink-0"
+              className="h-[52px] px-7 rounded-full bg-[var(--bg)] text-[var(--text)] text-[15px] font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-soft)] shrink-0"
             >
               Subscribe
             </button>

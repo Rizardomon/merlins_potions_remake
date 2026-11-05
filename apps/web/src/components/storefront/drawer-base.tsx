@@ -62,14 +62,14 @@ export function DrawerBase({
       <div
         aria-hidden="true"
         onClick={onClose}
-        className="absolute inset-0 bg-black/50"
+        className="absolute inset-0 bg-[rgba(31,26,38,0.45)]"
       />
 
       {/* Panel */}
       <div
         ref={panelRef}
         className={cn(
-          "relative z-10 h-full w-full max-w-sm bg-[var(--surface)] shadow-xl flex flex-col",
+          "relative z-10 h-full w-full max-w-[460px] bg-[var(--surface)] shadow-[-24px_0_60px_-20px_rgba(31,26,38,0.3)] flex flex-col",
           "translate-x-0 transition-transform duration-300 motion-reduce:transition-none"
         )}
       >

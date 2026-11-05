@@ -1,3 +1,5 @@
+"use client";
+
 const COMPANY_LINKS = [
   "Company",
   "Contact us",
@@ -8,28 +10,18 @@ const COMPANY_LINKS = [
 
 const SOCIAL_LINKS = ["Facebook", "X", "Pinterest", "Tumblr"] as const;
 
+const linkClass =
+  "text-sm text-[var(--text-2)] hover:text-[var(--accent)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] rounded";
+
 export function Footer() {
   return (
-    <footer className="bg-[var(--text)] text-[var(--bg)] py-10 px-4 sm:px-6">
-      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row gap-8 justify-between">
-        {/* Brand + copyright */}
-        <div className="shrink-0">
-          <p className="font-display text-lg font-semibold mb-1">
-            Merlin&apos;s <em className="not-italic text-[var(--accent-soft)]">Potions</em>
-          </p>
-          <p className="text-sm opacity-50">© 2026 Merlin&apos;s Potions</p>
-        </div>
-
-        {/* Company links */}
+    <footer className="border-t border-[var(--border)]">
+      <div className="max-w-[1280px] mx-auto p-4 sm:p-8 flex flex-wrap justify-between gap-5">
         <nav aria-label="Company links">
-          <ul role="list" className="flex flex-col gap-2">
+          <ul role="list" className="flex flex-wrap gap-6">
             {COMPANY_LINKS.map((link) => (
               <li key={link}>
-                <a
-                  href="#"
-                  onClick={(e) => e.preventDefault()}
-                  className="text-sm opacity-70 hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-soft)] rounded"
-                >
+                <a href="#" onClick={(e) => e.preventDefault()} className={linkClass}>
                   {link}
                 </a>
               </li>
@@ -37,22 +29,19 @@ export function Footer() {
           </ul>
         </nav>
 
-        {/* Social links */}
         <nav aria-label="Social media links">
-          <ul role="list" className="flex flex-col gap-2">
+          <ul role="list" className="flex flex-wrap gap-6">
             {SOCIAL_LINKS.map((link) => (
               <li key={link}>
-                <a
-                  href="#"
-                  onClick={(e) => e.preventDefault()}
-                  className="text-sm opacity-70 hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-soft)] rounded"
-                >
+                <a href="#" onClick={(e) => e.preventDefault()} className={linkClass}>
                   {link}
                 </a>
               </li>
             ))}
           </ul>
         </nav>
+
+        <p className="font-mono text-xs text-[var(--text-3)]">© 2026 Merlin&apos;s Potions</p>
       </div>
     </footer>
   );

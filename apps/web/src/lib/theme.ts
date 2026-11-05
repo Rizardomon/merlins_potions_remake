@@ -20,12 +20,12 @@ export function contrastRatio(fg: string, bg: string): number {
 
 /** Canonical design token values. Single source of truth for tests. */
 export const DESIGN_TOKENS = {
-  bg: "#f4f2ee",
-  surface: "#ffffff",
-  text: "#1b1813",
-  text2: "#6e685d",
-  accent: "#7c3aed",
-  accentStrong: "#6d28d9",
-  accentSoft: "#ede9fe",
-  accentText: "#5b21b6",
+  bg: "#f5f2ec",
+  surface: "#fbf9f5",
+  text: "#1f1a26",
+  text2: "#4a4352",
+  accent: "#4b2e83",
+  accentStrong: "#3b2268",
+  accentSoft: "#d9c7f2",
+  accentText: "#4b2e83",
 } as const;

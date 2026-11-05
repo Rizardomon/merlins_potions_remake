@@ -41,6 +41,6 @@ describe("CategoryNav", () => {
     render(<CategoryNav />);
     const clearance = screen.getByText("Clearance");
     const wrapper = clearance.closest("[aria-disabled='true']");
-    expect(wrapper?.className).toContain("red");
+    expect(wrapper?.className).toContain("accent");
   });
 });
