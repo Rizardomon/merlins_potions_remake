@@ -1,6 +1,7 @@
-import { redirect } from "next/navigation";
-
-/** Raiz do app: entra direto na primeira tela. */
 export default function Home() {
-  redirect("/dashboard");
+  return (
+    <main>
+      <h1>Merlin&apos;s Potions</h1>
+    </main>
+  );
 }

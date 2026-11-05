@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Manrope, JetBrains_Mono } from "next/font/google";
 import { Providers } from "./providers";
-import { ThemeScript } from "@/components/theme/theme-provider";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -20,22 +19,13 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Merlin's Potions Remake",
-  description: "Template NestJS + Next.js",
+  title: "Merlin's Potions",
+  description: "The finest magical potions, brewed to perfection.",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    // `suppressHydrationWarning`: o ThemeScript escreve `data-theme` no <html> antes da
-    // hidratação, então o atributo diverge do que o servidor renderizou — de propósito.
-    <html
-      lang="pt-BR"
-      suppressHydrationWarning
-      className={`${manrope.variable} ${jetbrainsMono.variable} font-sans`}
-    >
-      <head>
-        <ThemeScript />
-      </head>
+    <html lang="en" className={`${manrope.variable} ${jetbrainsMono.variable} font-sans`}>
       <body>
         <Providers>{children}</Providers>
       </body>
