@@ -3,7 +3,7 @@
 import { useBag } from "@/lib/bag/provider";
 
 export function Header() {
-  const { itemCount } = useBag();
+  const { itemCount, openBag } = useBag();
 
   return (
     <header className="bg-[var(--surface)] border-b border-[var(--border)]">
@@ -42,6 +42,7 @@ export function Header() {
         {/* Bag */}
         <button
           type="button"
+          onClick={openBag}
           aria-label={`Open bag, ${itemCount} item${itemCount !== 1 ? "s" : ""}`}
           className="relative flex items-center gap-1.5 text-sm font-medium text-[var(--text)] bg-[var(--accent)] text-white px-3 py-1.5 rounded-md hover:bg-[var(--accent-strong)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] shrink-0"
         >

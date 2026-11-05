@@ -4,6 +4,8 @@ import { Header } from "@/components/storefront/header";
 import { CategoryNav } from "@/components/storefront/category-nav";
 import { Footer } from "@/components/storefront/footer";
 import { NewsletterBlock } from "@/components/storefront/newsletter-block";
+import { BagDrawer } from "@/components/storefront/bag-drawer";
+import { AddToBagToast } from "@/components/storefront/add-to-bag-toast";
 import { BagProvider } from "@/lib/bag/provider";
 
 export default function StorefrontLayout({ children }: { children: ReactNode }) {
@@ -17,6 +19,8 @@ export default function StorefrontLayout({ children }: { children: ReactNode }) 
         <NewsletterBlock />
         <Footer />
       </div>
+      <BagDrawer />
+      <AddToBagToast />
     </BagProvider>
   );
 }
