@@ -37,7 +37,7 @@ APPLESCRIPT
 }
 
 run_same_screen() {
-  echo "Subindo server (:3001) e web (:3000) na mesma tela. Ctrl+C encerra todos."
+  echo "Subindo server (:3011) e web (:3010) na mesma tela. Ctrl+C encerra todos."
   pnpm exec concurrently \
     --names "server,web" \
     -c "blue,green" \

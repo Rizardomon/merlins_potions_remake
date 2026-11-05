@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const API_URL = process.env.API_URL ?? "http://localhost:3001/api";
+const API_URL = process.env.API_URL ?? "http://localhost:3011/api";
 
 /**
  * BFF: o browser nunca fala direto com a API NestJS. Toda chamada passa pelas rotas

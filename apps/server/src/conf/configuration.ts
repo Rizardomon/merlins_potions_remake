@@ -10,8 +10,8 @@ import { z } from "zod";
  */
 const baseSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
-  API_PORT: z.coerce.number().int().positive().default(3001),
-  WEB_ORIGIN: z.string().url().default("http://localhost:3000"),
+  API_PORT: z.coerce.number().int().positive().default(3011),
+  WEB_ORIGIN: z.string().url().default("http://localhost:3010"),
 
   /**
    * Conexão do Postgres. **Opcional no template**: os repositories de exemplo são

@@ -32,7 +32,7 @@ errado custa mais para desmontar do que para escrever.
 
 ```bash
 pnpm install
-pnpm dev:all                # server (:3001) + web (:3000) na mesma tela
+pnpm dev:all                # server (:3011) + web (:3010) na mesma tela
 pnpm dev:all --terminals    # cada app numa janela do Terminal (macOS)
 
 pnpm dev:server             # só o backend
@@ -42,8 +42,8 @@ pnpm build                  # build de tudo (Turborepo)
 pnpm typecheck              # tsc em todos os pacotes
 ```
 
-- Frontend: <http://localhost:3000>
-- API: <http://localhost:3001/api> · Swagger: <http://localhost:3001/api/docs>
+- Frontend: <http://localhost:3010>
+- API: <http://localhost:3011/api> · Swagger: <http://localhost:3011/api/docs>
 
 Nenhum serviço externo é necessário — sem banco, sem Redis, sem IdP.
 
