@@ -37,6 +37,13 @@ projeto — mantendo as regras de trabalho abaixo.
    português. Arquivos `kebab-case`; componentes/tipos `PascalCase`; hooks `useX`;
    funções/vars `camelCase`. Tabela no **singular**, rota no **plural**.
 
+   **Exceção UI inglês / US$ — MP-001 (Merlin's Potions storefront):** o storefront
+   público desta aplicação é a loja inteira (não há área admin); a UI é em inglês e os
+   preços são exibidos em dólares americanos (US$). Esta é uma exceção pontual e
+   aprovada — **não "corrija" os textos para português nem os preços para outra moeda**.
+   O campo `priceCents` armazena centavos de dólar; a formatação `US$ X.XX` é a correta.
+   Referência: ADR-001 (`.kproc/issues/MP-001/adrs/adr-001.md`).
+
 3. **O contrato é o Zod do `@merlins-potions-remake/shared`.** Não duplique tipos de domínio no front nem no
    back. O backend valida a entrada com ele; o frontend valida a resposta com ele.
 

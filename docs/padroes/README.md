@@ -23,6 +23,21 @@ Estes descrevem código que **existe** neste repositório e valem desde o primei
 - [Salvar direto em aba de detalhe (`apps/web`)](salvar-direto.md) — abas de subcoleção
   persistem na ação (sem botão "Salvar alterações"); replace-set × upsert quando há FK
 
+## Aplicáveis ao storefront (MP-001)
+
+Padrões definidos/aprovados para a issue MP-001; exigidos pela regra de trabalho nº 1
+antes de qualquer implementação de componente ou feature do storefront:
+
+- [Storefront público (`apps/web`)](storefront-publico.md) — route group `(storefront)` sem
+  AppShell, layout próprio (announcement bar, header, nav de categorias, footer), composição
+  de seções de página; referencia ADR-004 e ADR-005
+- [Drawer (`apps/web`)](drawer.md) — painel lateral sobre backdrop escurecido; fechar por
+  botão/backdrop/Escape; foco entra no drawer e retorna ao gatilho; focus trap; a11y ARIA;
+  referencia ADR-004 e ADR-006
+- [Client-state com persistência (`apps/web`)](client-state-persistido.md) — Context +
+  reducer puro + localStorage versionado; guarda de hydration; validação Zod do storage;
+  referencia ADR-003
+
 ## Referência (sem código correspondente)
 
 Estes vieram do projeto de origem e **não têm implementação no template**. Ficam como
