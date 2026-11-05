@@ -54,3 +54,6 @@ tmp/
 
 # envs de deploy (segredos)
 deploy/*.env
+
+# Test coverage
+coverage/
