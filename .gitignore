@@ -50,6 +50,7 @@ next-env.d.ts
 # --- Diretórios temporários ---
 tmp/
 .kompozy
+.kproc
 
 # envs de deploy (segredos)
 deploy/*.env
