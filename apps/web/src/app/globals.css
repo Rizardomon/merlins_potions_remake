@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 /* ===================================================================
-   Design tokens — Portal Kbase (handoff design_v1)
-   Fonte da verdade visual. Comutados por [data-theme="dark"] no <html>.
+   Design tokens — Merlin's Potions (Claude Design, light-only)
+   Source of truth for visual design. No dark mode.
    =================================================================== */
 :root {
   color-scheme: light;
@@ -17,11 +17,11 @@
   --text: #1b1813;
   --text-2: #6e685d;
   --text-3: #9c958a;
-  --accent: #f2941a;
-  --accent-strong: #dd7e03;
-  --accent-soft: #fbe9ce;
-  --accent-text: #9a5b06;
-  --ring: rgba(242, 148, 26, 0.26);
+  --accent: #7c3aed;
+  --accent-strong: #6d28d9;
+  --accent-soft: #ede9fe;
+  --accent-text: #5b21b6;
+  --ring: rgba(124, 58, 237, 0.26);
   --green: #15924c;
   --green-soft: #e1f2e6;
   --red: #d2433a;
@@ -30,32 +30,6 @@
   --blue-soft: #e5edfb;
   --shadow: 0 1px 2px rgba(28, 24, 18, 0.04), 0 4px 16px rgba(28, 24, 18, 0.05);
   --shadow-lg: 0 12px 38px rgba(28, 24, 18, 0.12);
-}
-
-[data-theme="dark"] {
-  color-scheme: dark;
-  --bg: #100e0a;
-  --surface: #1b1812;
-  --surface-2: #221e16;
-  --surface-3: #2a2519;
-  --border: #322d22;
-  --border-strong: #3d382a;
-  --text: #f4f0e7;
-  --text-2: #a79f90;
-  --text-3: #726b5c;
-  --accent: #f9a93c;
-  --accent-strong: #fbba5c;
-  --accent-soft: rgba(249, 169, 60, 0.14);
-  --accent-text: #f7b85b;
-  --ring: rgba(249, 169, 60, 0.24);
-  --green: #3fbe74;
-  --green-soft: rgba(63, 190, 116, 0.13);
-  --red: #ec6a60;
-  --red-soft: rgba(236, 106, 96, 0.13);
-  --blue: #6fa0f0;
-  --blue-soft: rgba(111, 160, 240, 0.13);
-  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 16px rgba(0, 0, 0, 0.35);
-  --shadow-lg: 0 14px 40px rgba(0, 0, 0, 0.55);
 }
 
 @layer base {
@@ -68,10 +42,6 @@
     font-size: 14px;
     line-height: 1.45;
     -webkit-font-smoothing: antialiased;
-  }
-  /* Logo PNG vira branco no tema escuro */
-  [data-theme="dark"] [data-logo] {
-    filter: brightness(0) invert(1);
   }
   ::selection {
     background: var(--accent-soft);

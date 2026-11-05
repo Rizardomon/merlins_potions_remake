@@ -1,11 +1,10 @@
 import type { Config } from "tailwindcss";
 
 /**
- * Tema mapeado sobre as CSS custom properties de globals.css.
- * Dark mode é dirigido por [data-theme="dark"] no <html> (não pela classe `dark`).
+ * Theme mapped over CSS custom properties from globals.css.
+ * Light-only — no dark mode.
  */
 const config: Config = {
-  darkMode: ['selector', '[data-theme="dark"]'],
   content: ["./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
@@ -47,8 +46,9 @@ const config: Config = {
         ring: "0 0 0 3px var(--ring)",
       },
       fontFamily: {
-        sans: ["var(--font-manrope)", "system-ui", "sans-serif"],
-        mono: ["var(--font-jetbrains)", "monospace"],
+        display: ["var(--font-display)", "Georgia", "serif"],
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "monospace"],
       },
       maxWidth: {
         content: "1480px",
