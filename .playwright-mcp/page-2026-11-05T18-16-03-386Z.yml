@@ -1,0 +1,144 @@
+- generic [ref=f2e1]:
+  - generic [ref=f2e2]:
+    - banner [ref=f2e3]: Free shipping on orders over $50
+    - banner [ref=f2e4]:
+      - link "Merlin's Potions — home" [ref=f2e5] [cursor=pointer]:
+        - /url: /
+        - text: Merlin's
+        - emphasis [ref=f2e6]: Potions
+      - generic [ref=f2e7]:
+        - generic [ref=f2e8]: Search products
+        - searchbox "Search products" [ref=f2e12]
+      - generic [ref=f2e13]:
+        - button "Sign in" [ref=f2e14] [cursor=pointer]
+        - button "Open bag, 0 items" [ref=f2e15] [cursor=pointer]:
+          - text: Bag
+          - generic [aria-hidden] [ref=f2e19]: "0"
+    - navigation "Product categories" [ref=f2e20]:
+      - list [ref=f2e21]:
+        - listitem [ref=f2e22]:
+          - generic [ref=f2e23]: Potions
+        - listitem [ref=f2e24]:
+          - generic [ref=f2e25]:
+            - text: Ingredients
+            - generic [ref=f2e26]: Soon
+        - listitem [ref=f2e27]:
+          - generic [ref=f2e28]:
+            - text: Books
+            - generic [ref=f2e29]: Soon
+        - listitem [ref=f2e30]:
+          - generic [ref=f2e31]:
+            - text: Supplies
+            - generic [ref=f2e32]: Soon
+        - listitem [ref=f2e33]:
+          - generic [ref=f2e34]:
+            - text: Charms
+            - generic [ref=f2e35]: Soon
+        - listitem [ref=f2e36]:
+          - generic [ref=f2e37]:
+            - text: Clearance
+            - generic [ref=f2e38]: Soon
+    - main [ref=f2e39]:
+      - region "Potions catalogue" [ref=f2e41]:
+        - generic [ref=f2e42]:
+          - generic [ref=f2e43]:
+            - paragraph [ref=f2e44]: Catalogue · 01 item
+            - heading "Potions" [level=1] [ref=f2e45]
+            - paragraph [ref=f2e46]: Small-batch brews, bottled by hand. Tap any bottle for its effect and ingredients.
+          - generic [ref=f2e47]:
+            - generic [ref=f2e48]:
+              - generic [ref=f2e49]: Search potions
+              - searchbox "Search potions" [ref=f2e50]: love
+            - group "Sort options" [ref=f2e51]:
+              - button "Featured" [pressed] [ref=f2e52] [cursor=pointer]
+              - 'button "Price: low to high" [ref=f2e53] [cursor=pointer]'
+              - 'button "Price: high to low" [ref=f2e54] [cursor=pointer]'
+        - button "View details for Love Potion" [ref=f2e129] [cursor=pointer]:
+          - generic [ref=f2e130]:
+            - generic [ref=f2e131]: No. 04
+            - img "Love Potion" [ref=f2e132]
+          - generic [ref=f2e133]:
+            - generic [ref=f2e134]:
+              - heading "Love Potion" [level=3] [ref=f2e135]
+              - generic [ref=f2e136]: US$ 17.99
+            - paragraph [ref=f2e137]: Causes powerful obsessive infatuation in the drinker.
+            - generic [ref=f2e138]:
+              - generic [ref=f2e139]: 4 ingredients
+              - button "Add Love Potion to bag" [ref=f2e140]: Add to bag
+        - dialog "Product detail" [ref=f2e175]:
+          - generic [ref=f2e177]:
+            - generic [ref=f2e178]:
+              - generic [ref=f2e179]:
+                - button "Close" [active] [ref=f2e180] [cursor=pointer]
+                - img "Love Potion" [ref=f2e184]
+              - generic [ref=f2e185]:
+                - generic [ref=f2e186]:
+                  - generic [ref=f2e187]: Potion · No. 04
+                  - heading "Love Potion" [level=2] [ref=f2e188]
+                  - generic [ref=f2e189]: US$ 17.99
+                - generic [ref=f2e190]:
+                  - heading "Use / Effect" [level=3] [ref=f2e191]
+                  - paragraph [ref=f2e192]: Causes powerful obsessive infatuation in the drinker.
+                - generic [ref=f2e193]:
+                  - heading "Ingredients" [level=3] [ref=f2e194]
+                  - list "Ingredients" [ref=f2e195]:
+                    - listitem [ref=f2e196]: Rose thorns
+                    - listitem [ref=f2e197]: Powdered moonstone
+                    - listitem [ref=f2e198]: Pearl dust
+                    - listitem [ref=f2e199]: Peppermint
+            - generic [ref=f2e200]:
+              - generic [ref=f2e201]: Quantity
+              - generic [ref=f2e202]:
+                - button "Decrease quantity" [disabled] [ref=f2e203]: −
+                - 'generic "Quantity: 1" [ref=f2e204]': "1"
+                - button "Increase quantity" [ref=f2e205] [cursor=pointer]: +
+              - button "Add to bag · US$ 17.99" [ref=f2e206] [cursor=pointer]
+    - region "Newsletter signup" [ref=f2e56]:
+      - generic [ref=f2e57]:
+        - generic [ref=f2e58]:
+          - heading [level=2] [ref=f2e59]:
+            - text: Sign up for our
+            - emphasis [ref=f2e60]: newsletter
+          - paragraph [ref=f2e61]: Exclusive discounts, new brews and seasonal restocks.
+        - generic [ref=f2e62]:
+          - generic [ref=f2e63]:
+            - generic [ref=f2e64]: Email address
+            - textbox "Email address" [ref=f2e65]:
+              - /placeholder: Enter your email
+          - button "Subscribe" [ref=f2e66] [cursor=pointer]
+    - contentinfo [ref=f2e67]:
+      - generic [ref=f2e68]:
+        - navigation "Company links" [ref=f2e69]:
+          - list [ref=f2e70]:
+            - listitem [ref=f2e71]:
+              - link "Company" [ref=f2e72] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f2e73]:
+              - link "Contact us" [ref=f2e74] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f2e75]:
+              - link "Shipping" [ref=f2e76] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f2e77]:
+              - link "Returns" [ref=f2e78] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f2e79]:
+              - link "Careers" [ref=f2e80] [cursor=pointer]:
+                - /url: "#"
+        - navigation "Social media links" [ref=f2e81]:
+          - list [ref=f2e82]:
+            - listitem [ref=f2e83]:
+              - link "Facebook" [ref=f2e84] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f2e85]:
+              - link "X" [ref=f2e86] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f2e87]:
+              - link "Pinterest" [ref=f2e88] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f2e89]:
+              - link "Tumblr" [ref=f2e90] [cursor=pointer]:
+                - /url: "#"
+        - paragraph [ref=f2e91]: © 2026 Merlin's Potions
+  - button "Open Next.js Dev Tools" [ref=f2e170] [cursor=pointer]
+  - alert [ref=f2e174]

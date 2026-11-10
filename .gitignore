@@ -57,3 +57,9 @@ deploy/*.env
 
 # Test coverage
 coverage/
+
+.kproc/qa.local.toml
+
+.kproc/qa-browser/
+
+.kproc/regression/evidence/

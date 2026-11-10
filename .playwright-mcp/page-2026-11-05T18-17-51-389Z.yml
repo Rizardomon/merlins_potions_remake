@@ -1,0 +1,102 @@
+- generic [ref=f4e2]:
+  - banner [ref=f4e3]: Free shipping on orders over $50
+  - banner [ref=f4e4]:
+    - link "Merlin's Potions — home" [ref=f4e5] [cursor=pointer]:
+      - /url: /
+      - text: Merlin's
+      - emphasis [ref=f4e6]: Potions
+    - generic [ref=f4e7]:
+      - generic [ref=f4e8]: Search products
+      - searchbox "Search products" [ref=f4e12]
+    - generic [ref=f4e13]:
+      - button "Sign in" [ref=f4e14] [cursor=pointer]
+      - button "Open bag, 0 items" [ref=f4e15] [cursor=pointer]:
+        - text: Bag
+        - generic [aria-hidden] [ref=f4e19]: "0"
+  - navigation "Product categories" [ref=f4e20]:
+    - list [ref=f4e21]:
+      - listitem [ref=f4e22]:
+        - generic [ref=f4e23]: Potions
+      - listitem [ref=f4e24]:
+        - generic [ref=f4e25]:
+          - text: Ingredients
+          - generic [ref=f4e26]: Soon
+      - listitem [ref=f4e27]:
+        - generic [ref=f4e28]:
+          - text: Books
+          - generic [ref=f4e29]: Soon
+      - listitem [ref=f4e30]:
+        - generic [ref=f4e31]:
+          - text: Supplies
+          - generic [ref=f4e32]: Soon
+      - listitem [ref=f4e33]:
+        - generic [ref=f4e34]:
+          - text: Charms
+          - generic [ref=f4e35]: Soon
+      - listitem [ref=f4e36]:
+        - generic [ref=f4e37]:
+          - text: Clearance
+          - generic [ref=f4e38]: Soon
+  - main [ref=f4e39]:
+    - region "Potions catalogue" [ref=f4e41]:
+      - generic [ref=f4e42]:
+        - generic [ref=f4e43]:
+          - paragraph [ref=f4e44]: Catalogue · 00 items
+          - heading "Potions" [level=1] [ref=f4e45]
+          - paragraph [ref=f4e46]: Small-batch brews, bottled by hand. Tap any bottle for its effect and ingredients.
+        - generic [ref=f4e47]:
+          - generic [ref=f4e48]:
+            - generic [ref=f4e49]: Search potions
+            - searchbox "Search potions" [ref=f4e50]
+          - group "Sort options" [ref=f4e51]:
+            - button "Featured" [pressed] [ref=f4e52] [cursor=pointer]
+            - 'button "Price: low to high" [ref=f4e53] [cursor=pointer]'
+            - 'button "Price: high to low" [ref=f4e54] [cursor=pointer]'
+      - paragraph [ref=f4e55]: Loading potions…
+  - region "Newsletter signup" [ref=f4e56]:
+    - generic [ref=f4e57]:
+      - generic [ref=f4e58]:
+        - heading [level=2] [ref=f4e59]:
+          - text: Sign up for our
+          - emphasis [ref=f4e60]: newsletter
+        - paragraph [ref=f4e61]: Exclusive discounts, new brews and seasonal restocks.
+      - generic [ref=f4e62]:
+        - generic [ref=f4e63]:
+          - generic [ref=f4e64]: Email address
+          - textbox "Email address" [ref=f4e65]:
+            - /placeholder: Enter your email
+        - button "Subscribe" [ref=f4e66] [cursor=pointer]
+  - contentinfo [ref=f4e67]:
+    - generic [ref=f4e68]:
+      - navigation "Company links" [ref=f4e69]:
+        - list [ref=f4e70]:
+          - listitem [ref=f4e71]:
+            - link "Company" [ref=f4e72] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f4e73]:
+            - link "Contact us" [ref=f4e74] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f4e75]:
+            - link "Shipping" [ref=f4e76] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f4e77]:
+            - link "Returns" [ref=f4e78] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f4e79]:
+            - link "Careers" [ref=f4e80] [cursor=pointer]:
+              - /url: "#"
+      - navigation "Social media links" [ref=f4e81]:
+        - list [ref=f4e82]:
+          - listitem [ref=f4e83]:
+            - link "Facebook" [ref=f4e84] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f4e85]:
+            - link "X" [ref=f4e86] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f4e87]:
+            - link "Pinterest" [ref=f4e88] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f4e89]:
+            - link "Tumblr" [ref=f4e90] [cursor=pointer]:
+              - /url: "#"
+      - paragraph [ref=f4e91]: © 2026 Merlin's Potions

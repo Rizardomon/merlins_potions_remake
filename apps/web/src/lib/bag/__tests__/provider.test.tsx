@@ -98,4 +98,58 @@ describe("BagProvider / useBag", () => {
     const stored = JSON.parse(lsMock.getItem(STORAGE_KEY) ?? "[]");
     expect(stored).toEqual([{ productId: P1.id, quantity: 1 }]);
   });
+
+  it("rehydrates correctly after page reload with populated catalog (F-001 scenario)", async () => {
+    // Step 1: User adds items and they persist to localStorage
+    const { result: result1, unmount: unmount1 } = renderHook(() => useBag(), {
+      wrapper: wrapper([P1, P2]),
+    });
+    await act(async () => {});
+    act(() => {
+      result1.current.dispatch({ type: "add", payload: { product: P1, quantity: 2 } });
+      result1.current.dispatch({ type: "add", payload: { product: P2, quantity: 1 } });
+    });
+    const stored = JSON.parse(lsMock.getItem(STORAGE_KEY) ?? "[]");
+    expect(stored).toEqual([
+      { productId: P1.id, quantity: 2 },
+      { productId: P2.id, quantity: 1 },
+    ]);
+    expect(result1.current.itemCount).toBe(3);
+
+    // Step 2: Simulate page reload (unmount and remount provider with same catalog)
+    unmount1();
+
+    // Step 3: Remount provider with same catalog — should rehydrate from localStorage
+    const { result: result2 } = renderHook(() => useBag(), {
+      wrapper: wrapper([P1, P2]),
+    });
+
+    // After effect: state should be rehydrated with items from storage
+    await act(async () => {});
+    expect(result2.current.state.hydrated).toBe(true);
+    expect(result2.current.state.lines).toHaveLength(2);
+    expect(result2.current.itemCount).toBe(3);
+    expect(result2.current.subtotalCents).toBe(5500); // (1500 * 2) + (2500 * 1)
+  });
+
+  it("hydrates with empty bag when catalog changed (unknown product IDs)", async () => {
+    // Setup: user has items saved for products P1 and P2
+    lsMock.setItem(
+      STORAGE_KEY,
+      JSON.stringify([
+        { productId: P1.id, quantity: 2 },
+        { productId: P2.id, quantity: 1 },
+      ])
+    );
+
+    // Scenario: page reloads but catalog only has P1 (e.g., P2 was removed)
+    const { result } = renderHook(() => useBag(), { wrapper: wrapper([P1]) });
+    await act(async () => {});
+
+    // Should only restore P1, discard P2
+    expect(result.current.state.hydrated).toBe(true);
+    expect(result.current.state.lines).toHaveLength(1);
+    expect(result.current.state.lines[0].product.id).toBe(P1.id);
+    expect(result.current.itemCount).toBe(2);
+  });
 });

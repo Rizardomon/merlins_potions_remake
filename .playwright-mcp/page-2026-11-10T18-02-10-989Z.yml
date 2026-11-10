@@ -1,0 +1,102 @@
+- generic [ref=e2]:
+  - banner [ref=e3]: Free shipping on orders over $50
+  - banner [ref=e4]:
+    - link "Merlin's Potions — home" [ref=e5] [cursor=pointer]:
+      - /url: /
+      - text: Merlin's
+      - emphasis [ref=e6]: Potions
+    - generic [ref=e7]:
+      - generic [ref=e8]: Search products
+      - searchbox "Search products" [ref=e12]
+    - generic [ref=e13]:
+      - button "Sign in" [ref=e14] [cursor=pointer]
+      - button "Open bag, 0 items" [ref=e15] [cursor=pointer]:
+        - text: Bag
+        - generic [aria-hidden] [ref=e19]: "0"
+  - navigation "Product categories" [ref=e20]:
+    - list [ref=e21]:
+      - listitem [ref=e22]:
+        - generic [ref=e23]: Potions
+      - listitem [ref=e24]:
+        - generic [ref=e25]:
+          - text: Ingredients
+          - generic [ref=e26]: Soon
+      - listitem [ref=e27]:
+        - generic [ref=e28]:
+          - text: Books
+          - generic [ref=e29]: Soon
+      - listitem [ref=e30]:
+        - generic [ref=e31]:
+          - text: Supplies
+          - generic [ref=e32]: Soon
+      - listitem [ref=e33]:
+        - generic [ref=e34]:
+          - text: Charms
+          - generic [ref=e35]: Soon
+      - listitem [ref=e36]:
+        - generic [ref=e37]:
+          - text: Clearance
+          - generic [ref=e38]: Soon
+  - main [ref=e39]:
+    - region "Potions catalogue" [ref=e41]:
+      - generic [ref=e42]:
+        - generic [ref=e43]:
+          - paragraph [ref=e44]: Catalogue · 00 items
+          - heading "Potions" [level=1] [ref=e45]
+          - paragraph [ref=e46]: Small-batch brews, bottled by hand. Tap any bottle for its effect and ingredients.
+        - generic [ref=e47]:
+          - generic [ref=e48]:
+            - generic [ref=e49]: Search potions
+            - searchbox "Search potions" [ref=e50]
+          - group "Sort options" [ref=e51]:
+            - button "Featured" [pressed] [ref=e52] [cursor=pointer]
+            - 'button "Price: low to high" [ref=e53] [cursor=pointer]'
+            - 'button "Price: high to low" [ref=e54] [cursor=pointer]'
+      - paragraph [ref=e55]: Loading potions…
+  - region "Newsletter signup" [ref=e56]:
+    - generic [ref=e57]:
+      - generic [ref=e58]:
+        - heading [level=2] [ref=e59]:
+          - text: Sign up for our
+          - emphasis [ref=e60]: newsletter
+        - paragraph [ref=e61]: Exclusive discounts, new brews and seasonal restocks.
+      - generic [ref=e62]:
+        - generic [ref=e63]:
+          - generic [ref=e64]: Email address
+          - textbox "Email address" [ref=e65]:
+            - /placeholder: Enter your email
+        - button "Subscribe" [ref=e66] [cursor=pointer]
+  - contentinfo [ref=e67]:
+    - generic [ref=e68]:
+      - navigation "Company links" [ref=e69]:
+        - list [ref=e70]:
+          - listitem [ref=e71]:
+            - link "Company" [ref=e72] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e73]:
+            - link "Contact us" [ref=e74] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e75]:
+            - link "Shipping" [ref=e76] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e77]:
+            - link "Returns" [ref=e78] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e79]:
+            - link "Careers" [ref=e80] [cursor=pointer]:
+              - /url: "#"
+      - navigation "Social media links" [ref=e81]:
+        - list [ref=e82]:
+          - listitem [ref=e83]:
+            - link "Facebook" [ref=e84] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e85]:
+            - link "X" [ref=e86] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e87]:
+            - link "Pinterest" [ref=e88] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e89]:
+            - link "Tumblr" [ref=e90] [cursor=pointer]:
+              - /url: "#"
+      - paragraph [ref=e91]: © 2026 Merlin's Potions

@@ -7,10 +7,17 @@ import { NewsletterBlock } from "@/components/storefront/newsletter-block";
 import { BagDrawer } from "@/components/storefront/bag-drawer";
 import { AddToBagToast } from "@/components/storefront/add-to-bag-toast";
 import { BagProvider } from "@/lib/bag/provider";
+import { listPotions } from "@/lib/api/product-repository";
 
-export default function StorefrontLayout({ children }: { children: ReactNode }) {
+export default async function StorefrontLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  const catalog = await listPotions();
+
   return (
-    <BagProvider catalog={[]}>
+    <BagProvider catalog={catalog}>
       <div className="min-h-screen flex flex-col">
         <AnnouncementBar />
         <Header />

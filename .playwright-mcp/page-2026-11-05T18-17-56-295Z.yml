@@ -1,0 +1,180 @@
+- generic [ref=f4e1]:
+  - generic [ref=f4e2]:
+    - banner [ref=f4e3]: Free shipping on orders over $50
+    - banner [ref=f4e4]:
+      - link "Merlin's Potions — home" [ref=f4e5] [cursor=pointer]:
+        - /url: /
+        - text: Merlin's
+        - emphasis [ref=f4e6]: Potions
+      - generic [ref=f4e7]:
+        - generic [ref=f4e8]: Search products
+        - searchbox "Search products" [ref=f4e12]
+      - generic [ref=f4e13]:
+        - button "Sign in" [ref=f4e14] [cursor=pointer]
+        - button "Open bag, 2 items" [ref=f4e179] [cursor=pointer]:
+          - text: Bag
+          - generic [aria-hidden] [ref=f4e19]: "2"
+    - navigation "Product categories" [ref=f4e20]:
+      - list [ref=f4e21]:
+        - listitem [ref=f4e22]:
+          - generic [ref=f4e23]: Potions
+        - listitem [ref=f4e24]:
+          - generic [ref=f4e25]:
+            - text: Ingredients
+            - generic [ref=f4e26]: Soon
+        - listitem [ref=f4e27]:
+          - generic [ref=f4e28]:
+            - text: Books
+            - generic [ref=f4e29]: Soon
+        - listitem [ref=f4e30]:
+          - generic [ref=f4e31]:
+            - text: Supplies
+            - generic [ref=f4e32]: Soon
+        - listitem [ref=f4e33]:
+          - generic [ref=f4e34]:
+            - text: Charms
+            - generic [ref=f4e35]: Soon
+        - listitem [ref=f4e36]:
+          - generic [ref=f4e37]:
+            - text: Clearance
+            - generic [ref=f4e38]: Soon
+    - main [ref=f4e39]:
+      - region "Potions catalogue" [ref=f4e41]:
+        - generic [ref=f4e42]:
+          - generic [ref=f4e43]:
+            - paragraph [ref=f4e44]: Catalogue · 06 items
+            - heading "Potions" [level=1] [ref=f4e45]
+            - paragraph [ref=f4e46]: Small-batch brews, bottled by hand. Tap any bottle for its effect and ingredients.
+          - generic [ref=f4e47]:
+            - generic [ref=f4e48]:
+              - generic [ref=f4e49]: Search potions
+              - searchbox "Search potions" [ref=f4e50]
+            - group "Sort options" [ref=f4e51]:
+              - button "Featured" [pressed] [ref=f4e52] [cursor=pointer]
+              - 'button "Price: low to high" [ref=f4e53] [cursor=pointer]'
+              - 'button "Price: high to low" [ref=f4e54] [cursor=pointer]'
+        - generic [ref=f4e93]:
+          - button "View details for Aging Potion" [ref=f4e94] [cursor=pointer]:
+            - generic [ref=f4e95]:
+              - generic [ref=f4e96]: No. 01
+              - img "Aging Potion" [ref=f4e97]
+            - generic [ref=f4e98]:
+              - generic [ref=f4e99]:
+                - heading "Aging Potion" [level=3] [ref=f4e100]
+                - generic [ref=f4e101]: US$ 12.99
+              - paragraph [ref=f4e102]: Ages the drinker by several decades for a short period.
+              - generic [ref=f4e103]:
+                - generic [ref=f4e104]: 4 ingredients
+                - button "Add Aging Potion to bag" [ref=f4e105]: Add to bag
+          - button "View details for Bulgeye Potion" [ref=f4e106] [cursor=pointer]:
+            - generic [ref=f4e107]:
+              - generic [ref=f4e108]: No. 02
+              - img "Bulgeye Potion" [ref=f4e109]
+            - generic [ref=f4e110]:
+              - generic [ref=f4e111]:
+                - heading "Bulgeye Potion" [level=3] [ref=f4e112]
+                - generic [ref=f4e113]: US$ 9.99
+              - paragraph [ref=f4e114]: Causes the drinker's eyes to bulge out dramatically.
+              - generic [ref=f4e115]:
+                - generic [ref=f4e116]: 4 ingredients
+                - button "Add Bulgeye Potion to bag" [active] [ref=f4e117]: Add to bag
+          - button "View details for Dragon Tonic" [ref=f4e118] [cursor=pointer]:
+            - generic [ref=f4e119]:
+              - generic [ref=f4e120]: No. 03
+              - img "Dragon Tonic" [ref=f4e121]
+            - generic [ref=f4e122]:
+              - generic [ref=f4e123]:
+                - heading "Dragon Tonic" [level=3] [ref=f4e124]
+                - generic [ref=f4e125]: US$ 24.99
+              - paragraph [ref=f4e126]: Grants the drinker dragon-like strength and fire resistance.
+              - generic [ref=f4e127]:
+                - generic [ref=f4e128]: 4 ingredients
+                - button "Add Dragon Tonic to bag" [ref=f4e129]: Add to bag
+          - button "View details for Love Potion" [ref=f4e130] [cursor=pointer]:
+            - generic [ref=f4e131]:
+              - generic [ref=f4e132]: No. 04
+              - img "Love Potion" [ref=f4e133]
+            - generic [ref=f4e134]:
+              - generic [ref=f4e135]:
+                - heading "Love Potion" [level=3] [ref=f4e136]
+                - generic [ref=f4e137]: US$ 17.99
+              - paragraph [ref=f4e138]: Causes powerful obsessive infatuation in the drinker.
+              - generic [ref=f4e139]:
+                - generic [ref=f4e140]: 4 ingredients
+                - button "Add Love Potion to bag" [ref=f4e141]: Add to bag
+          - button "View details for Polyjuice Potion" [ref=f4e142] [cursor=pointer]:
+            - generic [ref=f4e143]:
+              - generic [ref=f4e144]: No. 05
+              - img "Polyjuice Potion" [ref=f4e145]
+            - generic [ref=f4e146]:
+              - generic [ref=f4e147]:
+                - heading "Polyjuice Potion" [level=3] [ref=f4e148]
+                - generic [ref=f4e149]: US$ 34.99
+              - paragraph [ref=f4e150]: Allows the drinker to assume the form of another person.
+              - generic [ref=f4e151]:
+                - generic [ref=f4e152]: 7 ingredients
+                - button "Add Polyjuice Potion to bag" [ref=f4e153]: Add to bag
+          - button "View details for Sleeping Draught" [ref=f4e154] [cursor=pointer]:
+            - generic [ref=f4e155]:
+              - generic [ref=f4e156]: No. 06
+              - img "Sleeping Draught" [ref=f4e157]
+            - generic [ref=f4e158]:
+              - generic [ref=f4e159]:
+                - heading "Sleeping Draught" [level=3] [ref=f4e160]
+                - generic [ref=f4e161]: US$ 8.99
+              - paragraph [ref=f4e162]: Induces a deep and dreamless sleep in the drinker.
+              - generic [ref=f4e163]:
+                - generic [ref=f4e164]: 4 ingredients
+                - button "Add Sleeping Draught to bag" [ref=f4e165]: Add to bag
+    - region "Newsletter signup" [ref=f4e56]:
+      - generic [ref=f4e57]:
+        - generic [ref=f4e58]:
+          - heading [level=2] [ref=f4e59]:
+            - text: Sign up for our
+            - emphasis [ref=f4e60]: newsletter
+          - paragraph [ref=f4e61]: Exclusive discounts, new brews and seasonal restocks.
+        - generic [ref=f4e62]:
+          - generic [ref=f4e63]:
+            - generic [ref=f4e64]: Email address
+            - textbox "Email address" [ref=f4e65]:
+              - /placeholder: Enter your email
+          - button "Subscribe" [ref=f4e66] [cursor=pointer]
+    - contentinfo [ref=f4e67]:
+      - generic [ref=f4e68]:
+        - navigation "Company links" [ref=f4e69]:
+          - list [ref=f4e70]:
+            - listitem [ref=f4e71]:
+              - link "Company" [ref=f4e72] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f4e73]:
+              - link "Contact us" [ref=f4e74] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f4e75]:
+              - link "Shipping" [ref=f4e76] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f4e77]:
+              - link "Returns" [ref=f4e78] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f4e79]:
+              - link "Careers" [ref=f4e80] [cursor=pointer]:
+                - /url: "#"
+        - navigation "Social media links" [ref=f4e81]:
+          - list [ref=f4e82]:
+            - listitem [ref=f4e83]:
+              - link "Facebook" [ref=f4e84] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f4e85]:
+              - link "X" [ref=f4e86] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f4e87]:
+              - link "Pinterest" [ref=f4e88] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f4e89]:
+              - link "Tumblr" [ref=f4e90] [cursor=pointer]:
+                - /url: "#"
+        - paragraph [ref=f4e91]: © 2026 Merlin's Potions
+  - button "Open Next.js Dev Tools" [ref=f4e171] [cursor=pointer]
+  - alert [ref=f4e175]
+  - status [ref=f4e176]:
+    - generic [ref=f4e177]: 1 × Potion added
+    - button "View bag" [ref=f4e178] [cursor=pointer]
