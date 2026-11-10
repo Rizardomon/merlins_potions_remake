@@ -1,7 +1,11 @@
 import { PotionListSchema, type PotionList } from "@merlins-potions-remake/shared";
 
+export function getBaseUrl(): string {
+  return process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3010";
+}
+
 export async function listPotions(): Promise<PotionList> {
-  const res = await fetch("/api/products", { cache: "no-store" });
+  const res = await fetch(`${getBaseUrl()}/api/products`, { cache: "no-store" });
   if (!res.ok) return [];
   const raw = await res.json().catch(() => null);
   const result = PotionListSchema.safeParse(raw);
