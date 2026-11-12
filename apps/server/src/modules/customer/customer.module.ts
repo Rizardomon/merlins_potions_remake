@@ -7,6 +7,7 @@ import {
   DrizzleCustomerRepository,
 } from "./customer.repository";
 import { CustomerService } from "./customer.service";
+import { CustomerController } from "./customer.controller";
 
 const mailerProvider = {
   provide: MAILER,
@@ -14,6 +15,7 @@ const mailerProvider = {
 };
 
 @Module({
+  controllers: [CustomerController],
   providers: [
     CustomerService,
     {
