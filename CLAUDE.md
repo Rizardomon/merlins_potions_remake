@@ -51,6 +51,15 @@ projeto — mantendo as regras de trabalho abaixo.
    não tem regra de negócio, o service não conhece a origem dos dados. Frontend:
    `tela → hook → repository → BFF → API` — telas nunca chamam `fetch` direto.
 
+## Referência de design (OBRIGATÓRIA para UI)
+
+- Artefato de design: https://claude.ai/artifact/We6wujKZfwLs7UbAsy25xR — guia em
+  `project/Style Guide.dc.html`, mock do site em `project/Merlins Potions.dc.html`.
+  Ler com a ferramenta `Artifact` (`action: "read"` + `path`), nunca WebFetch.
+- Espelho dos tokens no repo: `docs/padroes/design-system.md`. Antes de criar/alterar
+  qualquer componente visual, consulte-o. Divergência: o artefato manda — atualize o espelho
+  e `apps/web/src/app/globals.css`.
+
 ## Referências rápidas
 
 - Criar um domínio no backend: `docs/padroes/backend-modulo.md`

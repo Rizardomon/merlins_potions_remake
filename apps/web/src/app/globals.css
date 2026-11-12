@@ -30,6 +30,16 @@
   --blue-soft: #e5edfb;
   --shadow: 0 1px 2px rgba(28, 24, 18, 0.04), 0 4px 16px rgba(28, 24, 18, 0.05);
   --shadow-lg: 0 12px 38px rgba(28, 24, 18, 0.12);
+  /* Design system (docs/padroes/design-system.md) */
+  --shadow-card-hover: 0 18px 40px -20px rgba(31, 26, 38, 0.35);
+  --shadow-drawer: -24px 0 60px -20px rgba(31, 26, 38, 0.3);
+  /* Potion tints — product backgrounds, ≈ oklch(0.92 0.035 <hue>) */
+  --tint-aging: #e9e1f1;
+  --tint-bulgeye: #ddebd9;
+  --tint-dragon: #e6e2f3;
+  --tint-love: #f3dedc;
+  --tint-polyjuice: #e2edd8;
+  --tint-sleeping: #dce6f2;
 }
 
 @layer base {

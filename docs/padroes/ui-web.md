@@ -23,8 +23,12 @@ ver [nova-tela.md](nova-tela.md).
   `bg-surface`, `bg-surface-2`, `text-content`, `text-content-2/3`, `border-border`,
   `text-accent-text`, `bg-accent-soft`, `text-green/red/blue`, `shadow-card`, etc.
   `darkMode: ['selector', '[data-theme="dark"]']`.
-- Fontes via `next/font`: `--font-manrope` (UI) e `--font-jetbrains` (mono: valores
-  monetários, datas, CPF, matrícula, tokens, colunas numéricas). Use `font-mono` nesses.
+- Valores dos tokens seguem o [design system](design-system.md) (espelho do artefato de
+  design). Utilitários do design: `bg-tint-<poção>`, `rounded-thumb|card|block|pill`,
+  `shadow-card-hover|drawer`.
+- Fontes via `next/font` (`src/app/layout.tsx`): `--font-display` Instrument Serif
+  (`font-display`: títulos, nomes de produto), `--font-sans` Hanken Grotesk (UI/corpo) e
+  `--font-mono` JetBrains Mono (`font-mono`: preços, quantidades, labels caixa-alta).
 - Tema: `ThemeProvider` (`src/components/theme/theme-provider.tsx`) aplica `data-theme`
   no `<html>` e persiste em `localStorage`. `ThemeScript` (no `<head>`) evita flash.
   Trocar tema pelo `Segmented` no Modal Configurações.

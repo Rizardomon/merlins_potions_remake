@@ -28,6 +28,8 @@ Estes descrevem código que **existe** neste repositório e valem desde o primei
 Padrões definidos/aprovados para a issue MP-001; exigidos pela regra de trabalho nº 1
 antes de qualquer implementação de componente ou feature do storefront:
 
+- [Design system](design-system.md) — **fonte visual** (artefato de design + espelho dos
+  tokens: cores, tipografia, espaço, componentes, voz); consultar antes de qualquer UI
 - [Storefront público (`apps/web`)](storefront-publico.md) — route group `(storefront)` sem
   AppShell, layout próprio (announcement bar, header, nav de categorias, footer), composição
   de seções de página; referencia ADR-004 e ADR-005
