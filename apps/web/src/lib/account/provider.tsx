@@ -18,7 +18,7 @@ import type { AccountAction, AccountState, AccountViewType } from "./types";
 interface AccountContextValue {
   state: AccountState;
   dispatch: React.Dispatch<AccountAction>;
-  triggerRef: React.RefObject<HTMLButtonElement>;
+  triggerRef: React.RefObject<HTMLButtonElement | null>;
   openOverlay: () => void;
   closeOverlay: () => void;
   switchView: (view: AccountViewType) => void;

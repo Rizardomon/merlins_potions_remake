@@ -4,17 +4,15 @@ import {
   useEffect,
   useRef,
   useCallback,
-  type ReactNode,
 } from "react";
 import { useAccountOverlay } from "@/lib/account/provider";
 import { useBag } from "@/lib/bag/provider";
 import { cn } from "@/lib/utils";
+import { SignInForm } from "./sign-in-form";
+import { CreateAccountForm } from "./create-account-form";
+import { ConfirmationView } from "./confirmation-view";
 
-interface AccountOverlayProps {
-  children: ReactNode;
-}
-
-function useAccountFocusTrap(open: boolean, triggerRef: React.RefObject<HTMLButtonElement>) {
+function useAccountFocusTrap(open: boolean, triggerRef: React.RefObject<HTMLButtonElement | null>) {
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -58,8 +56,8 @@ function useAccountFocusTrap(open: boolean, triggerRef: React.RefObject<HTMLButt
   return contentRef;
 }
 
-export function AccountOverlay({ children }: AccountOverlayProps) {
-  const { state, closeOverlay, triggerRef, switchView, setEmail } = useAccountOverlay();
+export function AccountOverlay() {
+  const { state, closeOverlay, triggerRef, switchView } = useAccountOverlay();
   const { closeBag } = useBag();
   const contentRef = useRef<HTMLDivElement>(null);
   const focusTrapRef = useAccountFocusTrap(state.overlayOpen, triggerRef);
@@ -200,7 +198,11 @@ export function AccountOverlay({ children }: AccountOverlayProps) {
             </div>
 
             {/* Form content */}
-            <div className="flex-1">{children}</div>
+            <div className="flex-1">
+              {state.activeView === "sign-in" && <SignInForm />}
+              {state.activeView === "create" && <CreateAccountForm />}
+              {state.activeView === "confirmation" && <ConfirmationView />}
+            </div>
 
             {/* Footer */}
             <div className="mt-8 pt-6 border-t border-[#E3DDD3] text-center text-xs text-[#6E6676]">
