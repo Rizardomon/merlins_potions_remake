@@ -11,6 +11,8 @@ import { cn } from "@/lib/utils";
 import { SignInForm } from "./sign-in-form";
 import { CreateAccountForm } from "./create-account-form";
 import { ConfirmationView } from "./confirmation-view";
+import { ResetRequestForm } from "./reset-request-form";
+import { CheckInboxView } from "./check-inbox";
 
 function useAccountFocusTrap(open: boolean, triggerRef: React.RefObject<HTMLButtonElement | null>) {
   const contentRef = useRef<HTMLDivElement>(null);
@@ -160,48 +162,52 @@ export function AccountOverlay() {
 
           {/* Form panel */}
           <div className="w-full lg:w-1/2 px-4 py-8 sm:px-8 flex flex-col">
-            {/* Tabs */}
-            <div
-              role="tablist"
-              className="flex border-b border-[#E3DDD3] mb-8 gap-8"
-            >
-              <button
-                role="tab"
-                aria-selected={state.activeView === "sign-in"}
-                onClick={() => {
-                  switchView("sign-in");
-                }}
-                className={cn(
-                  "pb-3 font-medium text-sm border-b-2 -mb-1",
-                  state.activeView === "sign-in"
-                    ? "text-[#1F1A26] border-[#1F1A26]"
-                    : "text-[#6E6676] border-transparent hover:text-[#1F1A26]"
-                )}
+            {/* Tabs — only show for sign-in/create views */}
+            {(state.activeView === "sign-in" || state.activeView === "create") && (
+              <div
+                role="tablist"
+                className="flex border-b border-[#E3DDD3] mb-8 gap-8"
               >
-                Sign in
-              </button>
-              <button
-                role="tab"
-                aria-selected={state.activeView === "create"}
-                onClick={() => {
-                  switchView("create");
-                }}
-                className={cn(
-                  "pb-3 font-medium text-sm border-b-2 -mb-1",
-                  state.activeView === "create"
-                    ? "text-[#1F1A26] border-[#1F1A26]"
-                    : "text-[#6E6676] border-transparent hover:text-[#1F1A26]"
-                )}
-              >
-                Create account
-              </button>
-            </div>
+                <button
+                  role="tab"
+                  aria-selected={state.activeView === "sign-in"}
+                  onClick={() => {
+                    switchView("sign-in");
+                  }}
+                  className={cn(
+                    "pb-3 font-medium text-sm border-b-2 -mb-1",
+                    state.activeView === "sign-in"
+                      ? "text-[#1F1A26] border-[#1F1A26]"
+                      : "text-[#6E6676] border-transparent hover:text-[#1F1A26]"
+                  )}
+                >
+                  Sign in
+                </button>
+                <button
+                  role="tab"
+                  aria-selected={state.activeView === "create"}
+                  onClick={() => {
+                    switchView("create");
+                  }}
+                  className={cn(
+                    "pb-3 font-medium text-sm border-b-2 -mb-1",
+                    state.activeView === "create"
+                      ? "text-[#1F1A26] border-[#1F1A26]"
+                      : "text-[#6E6676] border-transparent hover:text-[#1F1A26]"
+                  )}
+                >
+                  Create account
+                </button>
+              </div>
+            )}
 
             {/* Form content */}
             <div className="flex-1">
               {state.activeView === "sign-in" && <SignInForm />}
               {state.activeView === "create" && <CreateAccountForm />}
               {state.activeView === "confirmation" && <ConfirmationView />}
+              {state.activeView === "reset-request" && <ResetRequestForm />}
+              {state.activeView === "check-inbox" && <CheckInboxView />}
             </div>
 
             {/* Footer */}
