@@ -14,7 +14,7 @@
     "db:studio": "drizzle-kit studio",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "test:integration": "vitest run src/database/database.integration.spec.ts src/modules/customer/customer.migration.integration.spec.ts src/modules/customer/customer.repository.integration.spec.ts"
+    "test:integration": "vitest run src/database/database.integration.spec.ts src/modules/customer/customer.migration.integration.spec.ts src/modules/customer/customer.repository.integration.spec.ts src/modules/customer/customer.service.integration.spec.ts"
   },
   "dependencies": {
     "@merlins-potions-remake/shared": "workspace:*",
@@ -23,6 +23,7 @@
     "@nestjs/core": "^11.0.1",
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/swagger": "^11.0.0",
+    "argon2": "^0.41.1",
     "drizzle-orm": "^0.38.3",
     "pg": "^8.13.1",
     "reflect-metadata": "^0.2.2",
