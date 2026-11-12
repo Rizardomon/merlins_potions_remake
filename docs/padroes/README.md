@@ -17,7 +17,9 @@ Estes descrevem código que **existe** neste repositório e valem desde o primei
   hook → tela → menu
 - [Migrations (Drizzle)](migrations.md) — versionar schema com `generate`/`migrate`, runner
   próprio, aplicação one-shot no deploy; `push` só em dev
-- [Autenticação](auth.md) — **o template é aberto**: onde a auth se encaixa e como plugá-la
+- [Autenticação](auth.md) — **contas próprias (MP-002)**: sessão opaca em cookie HTTP-only
+  resolvida no Postgres, Argon2id, reset com mailer simulado e os três pontos de injeção;
+  substituto da recomendação de provedor externo do template
 - [Deploy (Docker + Nginx)](deploy.md) — imagens de web/server, compose por ambiente, envs e
   checklist de release
 - [Salvar direto em aba de detalhe (`apps/web`)](salvar-direto.md) — abas de subcoleção
