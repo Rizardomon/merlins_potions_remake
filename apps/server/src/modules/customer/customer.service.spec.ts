@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import {
   ConflictException,
+  GoneException,
   HttpException,
   HttpStatus,
   UnauthorizedException,
@@ -11,7 +12,9 @@ import type {
   SignUpRequest,
 } from "@merlins-potions-remake/shared";
 import { verify as verifyPassword } from "argon2";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import type { MailerMessage } from "../dev/mailer.interface";
+import type { Mailer } from "../dev/mailer.interface";
 import type { CustomerRow } from "./customer.entity";
 import { InMemoryCustomerRepository } from "./customer.repository.fake";
 import {
@@ -19,6 +22,7 @@ import {
   INVALID_CREDENTIALS_MESSAGE,
   LOCKOUT_DURATION_MS,
   LOCKOUT_MESSAGE,
+  PASSWORD_RESET_TOKEN_DURATION_MS,
   SESSION_DURATION_MS,
 } from "./customer.service";
 
@@ -51,11 +55,15 @@ async function captureError(promise: Promise<unknown>): Promise<unknown> {
 
 describe("CustomerService", () => {
   let repository: InMemoryCustomerRepository;
+  let mailer: Mailer;
   let service: CustomerService;
 
   beforeEach(() => {
     repository = new InMemoryCustomerRepository();
-    service = new CustomerService(repository);
+    mailer = {
+      send: vi.fn(),
+    };
+    service = new CustomerService(repository, mailer);
   });
 
   describe("signUp", () => {
@@ -318,6 +326,7 @@ describe("CustomerService", () => {
       missingCustomerRepository.findById = async () => null;
       const missingCustomerService = new CustomerService(
         missingCustomerRepository,
+        mailer,
       );
 
       const { sessionToken } =
@@ -338,6 +347,225 @@ describe("CustomerService", () => {
 
       await expect(service.signOut(sessionToken)).resolves.toBeUndefined();
       await expect(service.signOut("")).resolves.toBeUndefined();
+    });
+  });
+
+  describe("requestPasswordReset", () => {
+    it("não revela se o email existe", async () => {
+      await service.requestPasswordReset("unknown@example.com");
+      // Sem erro lançado, apenas resolve.
+    });
+
+    it("para email existente chama Mailer.send com URL de reset", async () => {
+      await service.signUp(signUpInput);
+
+      await service.requestPasswordReset(signUpInput.email);
+
+      expect(mailer.send).toHaveBeenCalledOnce();
+      const call = (mailer.send as ReturnType<typeof vi.fn>).mock.calls[0][0] as MailerMessage;
+      expect(call.to).toBe(signUpInput.email);
+      expect(call.resetUrl).toContain("/reset-password/");
+      expect(call.body).toContain(call.resetUrl);
+    });
+
+    it("persiste o hash do token, nunca o token em claro", async () => {
+      const created = await service.signUp(signUpInput);
+
+      await service.requestPasswordReset(signUpInput.email);
+
+      const call = (mailer.send as ReturnType<typeof vi.fn>).mock.calls[0][0] as MailerMessage;
+      const resetUrl = call.resetUrl!;
+      const [, token] = resetUrl.split("/reset-password/");
+
+      // O token está na URL chamada ao mailer.
+      // Mas no banco só o hash deve estar.
+      const tokenHash = sha256(token);
+      const resetTokenRow = await repository.findPasswordResetTokenByTokenHash(
+        tokenHash,
+      );
+      expect(resetTokenRow).not.toBeNull();
+      expect(resetTokenRow?.customerId).toBe(created.customer.id);
+      expect(resetTokenRow?.usedAt).toBeNull();
+    });
+
+    it("o token criado expira em 30 minutos", async () => {
+      const before = Date.now();
+      await service.signUp(signUpInput);
+
+      await service.requestPasswordReset(signUpInput.email);
+
+      const call = (mailer.send as ReturnType<typeof vi.fn>).mock.calls[0][0] as MailerMessage;
+      const resetUrl = call.resetUrl!;
+      const [, token] = resetUrl.split("/reset-password/");
+      const tokenHash = sha256(token);
+      const resetTokenRow = await repository.findPasswordResetTokenByTokenHash(
+        tokenHash,
+      );
+
+      expect(resetTokenRow!.expiresAt.getTime()).toBeGreaterThanOrEqual(
+        before + PASSWORD_RESET_TOKEN_DURATION_MS,
+      );
+      expect(resetTokenRow!.expiresAt.getTime()).toBeLessThanOrEqual(
+        Date.now() + PASSWORD_RESET_TOKEN_DURATION_MS + 1_000,
+      );
+    });
+
+    it("normaliza o email antes de buscar", async () => {
+      const { customer } = await service.signUp(signUpInput);
+
+      await service.requestPasswordReset("  " + signUpInput.email.toUpperCase() + "  ");
+
+      // Mailer foi chamado.
+      expect(mailer.send).toHaveBeenCalledOnce();
+      const call = (mailer.send as ReturnType<typeof vi.fn>).mock.calls[0][0] as MailerMessage;
+      expect(call.to).toBe(signUpInput.email);
+    });
+  });
+
+  describe("completePasswordReset", () => {
+    it("rejeita token inválido com 410", async () => {
+      const error = (await captureError(
+        service.completePasswordReset("invalid-token", "new password"),
+      )) as GoneException;
+
+      expect(error).toBeInstanceOf(GoneException);
+      expect(error.getStatus()).toBe(410);
+    });
+
+    it("rejeita token expirado com 410", async () => {
+      const { customer } = await service.signUp(signUpInput);
+      const token = "reset-token";
+      const tokenHash = sha256(token);
+
+      await repository.createPasswordResetToken({
+        customerId: customer.id,
+        tokenHash,
+        expiresAt: new Date(Date.now() - 1_000),
+      });
+
+      const error = (await captureError(
+        service.completePasswordReset(token, "new password"),
+      )) as GoneException;
+
+      expect(error).toBeInstanceOf(GoneException);
+      expect(error.getStatus()).toBe(410);
+      expect(error.message).toContain("expired");
+    });
+
+    it("rejeita token já usado com 410", async () => {
+      const { customer } = await service.signUp(signUpInput);
+      const token = "reset-token";
+      const tokenHash = sha256(token);
+
+      await repository.createPasswordResetToken({
+        customerId: customer.id,
+        tokenHash,
+        expiresAt: new Date(Date.now() + PASSWORD_RESET_TOKEN_DURATION_MS),
+      });
+
+      await service.completePasswordReset(token, "new password");
+
+      const error = (await captureError(
+        service.completePasswordReset(token, "another password"),
+      )) as GoneException;
+
+      expect(error).toBeInstanceOf(GoneException);
+      expect(error.getStatus()).toBe(410);
+      expect(error.message).toContain("already been used");
+    });
+
+    it("rehasheia a senha com Argon2id", async () => {
+      const { customer } = await service.signUp(signUpInput);
+      const originalPasswordHash = (await repository.findById(customer.id))?.passwordHash;
+
+      const token = "reset-token";
+      const tokenHash = sha256(token);
+      const newPassword = "new password 12345";
+
+      await repository.createPasswordResetToken({
+        customerId: customer.id,
+        tokenHash,
+        expiresAt: new Date(Date.now() + PASSWORD_RESET_TOKEN_DURATION_MS),
+      });
+
+      await service.completePasswordReset(token, newPassword);
+
+      const updated = await repository.findById(customer.id);
+      expect(updated?.passwordHash).toMatch(/^\$argon2id\$/);
+      expect(updated?.passwordHash).not.toBe(originalPasswordHash);
+      await expect(
+        verifyPassword(updated!.passwordHash, newPassword),
+      ).resolves.toBe(true);
+    });
+
+    it("revoga todas as sessões da conta", async () => {
+      const { customer, sessionToken } = await service.signUp(signUpInput);
+      const token = "reset-token";
+      const tokenHash = sha256(token);
+
+      // Cria mais uma sessão.
+      const sessionToken2 = "token-2";
+      await repository.createSession({
+        customerId: customer.id,
+        tokenHash: sha256(sessionToken2),
+        expiresAt: new Date(Date.now() + SESSION_DURATION_MS),
+      });
+
+      await repository.createPasswordResetToken({
+        customerId: customer.id,
+        tokenHash,
+        expiresAt: new Date(Date.now() + PASSWORD_RESET_TOKEN_DURATION_MS),
+      });
+
+      await service.completePasswordReset(token, "new password");
+
+      await expect(service.resolveSession(sessionToken)).resolves.toBeNull();
+      await expect(service.resolveSession(sessionToken2)).resolves.toBeNull();
+    });
+
+    it("zera failed_sign_in_count e lockout_until", async () => {
+      const { customer } = await service.signUp(signUpInput);
+      const token = "reset-token";
+      const tokenHash = sha256(token);
+
+      await repository.update(customer.id, {
+        failedSignInCount: 5,
+        lockoutUntil: new Date(Date.now() + LOCKOUT_DURATION_MS),
+      });
+
+      await repository.createPasswordResetToken({
+        customerId: customer.id,
+        tokenHash,
+        expiresAt: new Date(Date.now() + PASSWORD_RESET_TOKEN_DURATION_MS),
+      });
+
+      await service.completePasswordReset(token, "new password");
+
+      const updated = await repository.findById(customer.id);
+      expect(updated?.failedSignInCount).toBe(0);
+      expect(updated?.lockoutUntil).toBeNull();
+    });
+
+    it("marca o token como usado", async () => {
+      const { customer } = await service.signUp(signUpInput);
+      const token = "reset-token";
+      const tokenHash = sha256(token);
+
+      await repository.createPasswordResetToken({
+        customerId: customer.id,
+        tokenHash,
+        expiresAt: new Date(Date.now() + PASSWORD_RESET_TOKEN_DURATION_MS),
+      });
+
+      const before = Date.now();
+      await service.completePasswordReset(token, "new password");
+
+      const updated = await repository.findPasswordResetTokenByTokenHash(
+        tokenHash,
+      );
+      expect(updated?.usedAt).not.toBeNull();
+      expect(updated!.usedAt!.getTime()).toBeGreaterThanOrEqual(before);
+      expect(updated!.usedAt!.getTime()).toBeLessThanOrEqual(Date.now() + 1_000);
     });
   });
 });

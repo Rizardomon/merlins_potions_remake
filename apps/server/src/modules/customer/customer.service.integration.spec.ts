@@ -1,22 +1,26 @@
-import { randomBytes } from "node:crypto";
+import { createHash, randomBytes } from "node:crypto";
 import { join } from "node:path";
 import {
   type INestApplicationContext,
+  GoneException,
   UnauthorizedException,
 } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
 import type { SignInRequest, SignUpRequest } from "@merlins-potions-remake/shared";
+import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { migrate } from "drizzle-orm/node-postgres/migrator";
 import { Pool } from "pg";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+import type { Mailer } from "../dev/mailer.interface";
+import { MAILER } from "../dev/mailer.interface";
 import type { Database } from "../../database/database.module";
 import * as entities from "../../database/entities";
 import {
   CUSTOMER_REPOSITORY,
   DrizzleCustomerRepository,
 } from "./customer.repository";
-import { CustomerService } from "./customer.service";
+import { CustomerService, PASSWORD_RESET_TOKEN_DURATION_MS } from "./customer.service";
 
 /**
  * Durabilidade exigida pelo PRD: conta criada por um processo/módulo continua autenticável
@@ -52,12 +56,20 @@ integration("CustomerService durability (integration)", () => {
   let database: Database;
 
   async function createModule(): Promise<INestApplicationContext> {
+    const mockMailer: Mailer = {
+      send: vi.fn(),
+    };
+
     const moduleRef = await Test.createTestingModule({
       providers: [
         CustomerService,
         {
           provide: CUSTOMER_REPOSITORY,
           useValue: new DrizzleCustomerRepository(database),
+        },
+        {
+          provide: MAILER,
+          useValue: mockMailer,
         },
       ],
     }).compile();
@@ -114,5 +126,82 @@ integration("CustomerService durability (integration)", () => {
     ).rejects.toBeInstanceOf(UnauthorizedException);
 
     await secondModule.close();
+  }, 60_000);
+
+  it("ciclo de reset: token single-use, expira em 30min, revoga sessões, permite novo sign-in", async () => {
+    const module = await createModule();
+    const service = module.get(CustomerService);
+
+    // Sign-up cria conta e sessão.
+    const created = await service.signUp(signUpInput);
+    const originalSessionToken = created.sessionToken;
+
+    // Request de reset (sem revelar existência).
+    await service.requestPasswordReset(signUpInput.email);
+
+    // Simula obtenção do token via mailer (no banco temos o hash).
+    const repository = new DrizzleCustomerRepository(database);
+    const allResetTokens = await database.select().from(entities.passwordResetToken);
+    const createdResetToken = allResetTokens[0];
+    expect(createdResetToken).not.toBeUndefined();
+    expect(createdResetToken.customerId).toBe(created.customer.id);
+    expect(createdResetToken.usedAt).toBeNull();
+
+    // Para fins de teste, recrio o token em claro. Na vida real vem da URL do email.
+    // Aqui vamos simular: sabemos que o token foi hashado, vamos usar um gerado fresh.
+    const testToken = "test-reset-token-for-integration";
+    const testTokenHash = createHash("sha256").update(testToken).digest("hex");
+
+    // Reseta o token do banco para nosso teste.
+    await database
+      .update(entities.passwordResetToken)
+      .set({ tokenHash: testTokenHash })
+      .where(eq(entities.passwordResetToken.id, createdResetToken.id));
+
+    // Token válido permite reset.
+    const newPassword = "new password 98765";
+    await service.completePasswordReset(testToken, newPassword);
+
+    // Sessão anterior foi revogada.
+    await expect(service.resolveSession(originalSessionToken)).resolves.toBeNull();
+
+    // Novo sign-in com nova senha funciona.
+    const newSignedIn = await service.signIn({
+      email: signUpInput.email,
+      password: newPassword,
+      keepSignedIn: true,
+    });
+    expect(newSignedIn.customer.id).toBe(created.customer.id);
+    expect(newSignedIn.sessionToken).not.toBe(originalSessionToken);
+
+    // Token já usado não funciona 2ª vez.
+    await expect(
+      service.completePasswordReset(testToken, "another password"),
+    ).rejects.toBeInstanceOf(GoneException);
+
+    await module.close();
+  }, 60_000);
+
+  it("token de reset expirado é recusado com 410", async () => {
+    const module = await createModule();
+    const service = module.get(CustomerService);
+    const repository = new DrizzleCustomerRepository(database);
+
+    const created = await service.signUp(signUpInput);
+    const token = "expired-token";
+    const tokenHash = createHash("sha256").update(token).digest("hex");
+
+    // Cria token expirado.
+    await repository.createPasswordResetToken({
+      customerId: created.customer.id,
+      tokenHash,
+      expiresAt: new Date(Date.now() - 1_000),
+    });
+
+    await expect(
+      service.completePasswordReset(token, "new password"),
+    ).rejects.toBeInstanceOf(GoneException);
+
+    await module.close();
   }, 60_000);
 });

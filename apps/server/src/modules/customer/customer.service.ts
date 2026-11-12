@@ -1,6 +1,7 @@
 import { createHash, randomBytes } from "node:crypto";
 import {
   ConflictException,
+  GoneException,
   HttpException,
   HttpStatus,
   Inject,
@@ -13,6 +14,8 @@ import type {
   SignUpRequest,
 } from "@merlins-potions-remake/shared";
 import { argon2id, hash as hashPassword, verify as verifyPassword } from "argon2";
+import type { Mailer } from "../dev/mailer.interface";
+import { MAILER } from "../dev/mailer.interface";
 import type { CustomerRow } from "./customer.entity";
 import {
   CUSTOMER_REPOSITORY,
@@ -21,6 +24,9 @@ import {
 
 /** Duração da sessão: sempre criação + 30 dias (ADR-005). */
 export const SESSION_DURATION_MS = 30 * 24 * 60 * 60 * 1000;
+
+/** Duração do token de reset de senha: 30 minutos. */
+export const PASSWORD_RESET_TOKEN_DURATION_MS = 30 * 60 * 1000;
 
 /** Janela de pausa após 5 falhas consecutivas de sign-in. */
 export const LOCKOUT_DURATION_MS = 15 * 60 * 1000;
@@ -75,6 +81,8 @@ export class CustomerService {
   constructor(
     @Inject(CUSTOMER_REPOSITORY)
     private readonly repository: CustomerRepository,
+    @Inject(MAILER)
+    private readonly mailer: Mailer,
   ) {}
 
   async signUp(input: SignUpRequest): Promise<AuthSession> {
@@ -139,6 +147,67 @@ export class CustomerService {
   async signOut(sessionToken: string): Promise<void> {
     if (!sessionToken) return;
     await this.repository.deleteSessionByTokenHash(this.hashToken(sessionToken));
+  }
+
+  async requestPasswordReset(email: string): Promise<void> {
+    const normalizedEmail = this.normalizeEmail(email);
+    const customer = await this.repository.findByEmail(normalizedEmail);
+
+    if (!customer) {
+      return;
+    }
+
+    const token = randomBytes(32).toString("base64url");
+    const tokenHash = this.hashToken(token);
+    const expiresAt = new Date(Date.now() + PASSWORD_RESET_TOKEN_DURATION_MS);
+
+    await this.repository.createPasswordResetToken({
+      customerId: customer.id,
+      tokenHash,
+      expiresAt,
+    });
+
+    const webOrigin = process.env.WEB_ORIGIN || "http://localhost:3000";
+    const resetUrl = `${webOrigin}/reset-password/${token}`;
+
+    await this.mailer.send({
+      to: normalizedEmail,
+      subject: "Reset your password",
+      body: `Click the link to reset your password: ${resetUrl}`,
+      resetUrl,
+    });
+  }
+
+  async completePasswordReset(token: string, password: string): Promise<void> {
+    const tokenHash = this.hashToken(token);
+    const resetToken = await this.repository.findPasswordResetTokenByTokenHash(tokenHash);
+
+    if (!resetToken) {
+      throw new GoneException("This reset link is no longer valid.");
+    }
+
+    if (resetToken.usedAt !== null) {
+      throw new GoneException("This reset link has already been used.");
+    }
+
+    if (resetToken.expiresAt.getTime() <= Date.now()) {
+      throw new GoneException("This reset link has expired.");
+    }
+
+    const passwordHash = await hashPassword(password, { type: argon2id });
+
+    await this.repository.update(resetToken.customerId, {
+      passwordHash,
+      failedSignInCount: 0,
+      lockoutUntil: null,
+    });
+
+    await this.repository.markPasswordResetTokenUsed(
+      resetToken.id,
+      new Date(),
+    );
+
+    await this.repository.deleteAllSessionsForCustomer(resetToken.customerId);
   }
 
   async resolveSession(
