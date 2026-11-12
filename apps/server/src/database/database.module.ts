@@ -7,16 +7,15 @@ import * as entities from "./entities";
 /** Token de injeção do cliente Drizzle. */
 export const DRIZZLE = Symbol("DRIZZLE");
 
-/** Tipo do banco injetado (Drizzle tipado pelo schema completo). */
-export type Database = NodePgDatabase<typeof entities>;
+/** Tipo do banco injetado (Drizzle tipado pelo schema completo + pool do `pg`). */
+export type Database = NodePgDatabase<typeof entities> & { $client: Pool };
 
 /**
- * Provê o cliente Drizzle globalmente. A conexão é construída de forma assíncrona
- * a partir do ConfigService (DATABASE_URL). Só o repository deve injetar o DRIZZLE.
+ * Provê o cliente Drizzle globalmente. A conexão é construída a partir do ConfigService
+ * (DATABASE_URL obrigatória). Só o repository deve injetar o DRIZZLE.
  *
- * **Não está importado no `app.module.ts`**: os repositories do template são em memória,
- * então o app sobe sem Postgres. Ao ligar a persistência, adicione-o aos `imports` do
- * módulo raiz e siga `modules/_example/README.md`.
+ * Está importado no `app.module.ts` desde MP-002 (ADR-004): o app não sobe sem
+ * `DATABASE_URL`. O pool do `pg` conecta na primeira query, não na criação.
  */
 @Global()
 @Module({

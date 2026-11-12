@@ -4,9 +4,10 @@ import { z } from "zod";
  * Validação/tipagem das variáveis de ambiente do backend.
  * Usada pelo ConfigModule (`validate`) — falha o boot se algo obrigatório faltar.
  *
- * Os defaults existem para o `dev` rodar sem `.env`. Ao adicionar uma env de produção
- * com segredo, replique aqui o padrão do `superRefine`: reprovar o valor de dev quando
- * `NODE_ENV=production`, para o server não subir silenciosamente com credencial pública.
+ * Defaults cobrem as envs de infraestrutura; segredos (como `DATABASE_URL`) não têm
+ * default. Ao adicionar uma env de produção com segredo, replique aqui o padrão do
+ * `superRefine`: reprovar o valor de dev quando `NODE_ENV=production`, para o server não
+ * subir silenciosamente com credencial pública.
  */
 const baseSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
@@ -14,12 +15,19 @@ const baseSchema = z.object({
   WEB_ORIGIN: z.string().url().default("http://localhost:3010"),
 
   /**
-   * Conexão do Postgres. **Opcional no template**: os repositories de exemplo são
-   * em memória, então o app sobe sem banco. Ao ligar a persistência (ver
-   * `modules/_example/`), troque para `z.string().url()` — obrigatória — e importe o
-   * `DatabaseModule` no `app.module.ts`.
+   * Conexão do Postgres. **Obrigatória**: a persistência está ligada (ADR-004), então
+   * o boot falha sem banco. Em dev, suba o serviço `postgres` do
+   * `deploy/docker-compose.yml` (profile `dev-db`) e use a URL de `apps/server/.env.example`.
    */
-  DATABASE_URL: z.string().url().optional(),
+  DATABASE_URL: z
+    .string({
+      required_error:
+        "DATABASE_URL é obrigatória — suba o Postgres (deploy/docker-compose.yml, profile dev-db) e defina a URL de conexão",
+    })
+    .url({ message: "DATABASE_URL deve ser uma URL de conexão Postgres válida" })
+    .refine((url) => /^postgres(ql)?:\/\//.test(url), {
+      message: "DATABASE_URL deve usar o scheme postgres:// ou postgresql://",
+    }),
 
   // Swagger em /api/docs. Sem valor explícito: ligado fora de produção, desligado em produção.
   SWAGGER_ENABLED: z

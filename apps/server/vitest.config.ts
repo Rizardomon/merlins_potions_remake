@@ -7,8 +7,12 @@ export default defineConfig({
     globals: true,
     coverage: {
       provider: "v8",
-      include: ["src/modules/product/**/*.ts"],
-      exclude: ["src/modules/product/*.module.ts"],
+      include: [
+        "src/modules/product/**/*.ts",
+        "src/conf/configuration.ts",
+        "src/database/database.module.ts",
+      ],
+      exclude: ["src/**/*.spec.ts", "src/modules/product/product.module.ts"],
       thresholds: { lines: 80, functions: 80, branches: 80, statements: 80 },
     },
   },

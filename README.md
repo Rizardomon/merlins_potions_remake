@@ -21,17 +21,20 @@ pnpm + Turborepo. Projeto derivado do template `modelo-01` (Kbase Modelos).
 - **Autenticação** — a aplicação é aberta. Cada projeto pluga o seu IdP; ver
   `docs/padroes/auth.md` para os três pontos de costura.
 - **Permissionamento** — o menu vem do backend, sem filtro.
-- **Banco de dados** — os repositories são mocados em memória, e o app sobe sem Postgres.
-  O caminho completo com Drizzle está pronto e comentado em
-  `apps/server/src/modules/_example/`.
 
-Isso é deliberado: são as três decisões que mais variam entre projetos, e um esqueleto
+Isso é deliberado: são as decisões que mais variam entre projetos, e um esqueleto
 errado custa mais para desmontar do que para escrever.
 
 ## Rodando
 
+O backend agora persiste em PostgreSQL (ADR-004): `DATABASE_URL` é obrigatória.
+
 ```bash
 pnpm install
+
+# Postgres de dev (profile dev-db do compose) — obrigatório para o server subir
+docker compose -f deploy/docker-compose.yml --profile dev-db up -d postgres
+
 pnpm dev:all                # server (:3011) + web (:3010) na mesma tela
 pnpm dev:all --terminals    # cada app numa janela do Terminal (macOS)
 
@@ -42,10 +45,14 @@ pnpm build                  # build de tudo (Turborepo)
 pnpm typecheck              # tsc em todos os pacotes
 ```
 
+Copie `.env.example` para `.env` (ou use `apps/server/.env`); o default aponta para o
+Postgres do compose (`postgres://app:app@localhost:5432/app`). Sem `DATABASE_URL` o boot
+falha com mensagem explícita.
+
 - Frontend: <http://localhost:3010>
 - API: <http://localhost:3011/api> · Swagger: <http://localhost:3011/api/docs>
 
-Nenhum serviço externo é necessário — sem banco, sem Redis, sem IdP.
+O único serviço externo é o Postgres; auth e permissionamento continuam fora do escopo.
 
 ## Estrutura
 
@@ -55,7 +62,7 @@ apps/
     src/
       conf/                 # validação das envs (Zod)
       common/               # helpers de HTTP e OpenAPI
-      database/             # Drizzle: módulo, migrations, auditoria (inativo)
+      database/             # Drizzle: módulo, migrations, auditoria (ativo)
       modules/
         _example/           # REFERÊNCIA comentada: como ligar o Postgres
         menu/               # menu de navegação (repository mocado)

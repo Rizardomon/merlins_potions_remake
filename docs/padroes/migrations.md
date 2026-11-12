@@ -4,10 +4,51 @@ Padrão para versionar e aplicar mudanças de schema no `apps/server`. Substitui
 `drizzle-kit push` (que fica **só para dev local**). Fonte do schema: as entities Drizzle
 (`src/database/entities.ts`, barrel dos `*.entity.ts`).
 
-> **O template ainda não tem banco** (repositories em memória) — por isso `entities.ts` está
-> vazio e não há migration alguma. Este documento vale a partir do momento em que o seu
-> projeto ligar a persistência; o passo a passo está em
-> `apps/server/src/modules/_example/README.md`.
+> **A persistência está ligada (MP-002 / ADR-004):** `DATABASE_URL` é obrigatória e o
+> `DatabaseModule` está importado no `app.module.ts`. `entities.ts` ainda está vazio até o
+> primeiro domínio persistido gerar a primeira migration; o passo a passo por domínio está
+> em `apps/server/src/modules/_example/README.md`.
+
+## Postgres em dev e CI
+
+Dev local (serviço opcional do compose, sob o profile `dev-db`):
+
+```bash
+docker compose -f deploy/docker-compose.yml --profile dev-db up -d postgres
+export DATABASE_URL=postgres://app:app@localhost:5432/app
+```
+
+Os defaults do serviço são `app` / `app` / `app` (`POSTGRES_USER`, `POSTGRES_PASSWORD`,
+`POSTGRES_DB`). O volume `postgres-data` preserva os dados entre restarts.
+
+Em CI, suba um Postgres equivalente e exporte `DATABASE_URL` (para o boot do server) e
+`TEST_DATABASE_URL` (para o teste de integração, que é opt-in). Exemplo com GitHub Actions:
+
+```yaml
+services:
+  postgres:
+    image: postgres:16-alpine
+    env:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_DB: app
+    ports: ["5432:5432"]
+    options: >-
+      --health-cmd "pg_isready -U app -d app"
+      --health-interval 5s
+      --health-timeout 5s
+      --health-retries 10
+
+env:
+  DATABASE_URL: postgres://app:app@localhost:5432/app
+  TEST_DATABASE_URL: postgres://app:app@localhost:5432/app
+```
+
+O teste de integração é opt-in (roda só quando `TEST_DATABASE_URL` existe):
+
+```bash
+pnpm --filter @merlins-potions-remake/server test:integration
+```
 
 ## Arquivos
 

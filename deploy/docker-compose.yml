@@ -2,8 +2,10 @@
 #
 #   docker compose --env-file deploy/app.env -f deploy/docker-compose.yml up -d --build
 #
-# O Postgres NÃO está aqui: aponte a DATABASE_URL para o banco do seu ambiente. Se preferir
-# subir um Postgres junto, acrescente o serviço e uma rede compartilhada.
+# O Postgres de produção é EXTERNO: aponte a DATABASE_URL para o banco do ambiente. Para
+# dev/CI há um serviço local opcional sob o profile `dev-db` (não sobe no deploy padrão):
+#
+#   docker compose -f deploy/docker-compose.yml --profile dev-db up -d postgres
 #
 # `BIND_ADDR` controla onde as portas são publicadas. Use `127.0.0.1` quando houver um proxy
 # reverso na MESMA máquina; um IP da LAN só quando o proxy estiver em outra — e nesse caso o
@@ -15,10 +17,31 @@
 name: app
 
 services:
+  # Postgres local para dev/CI. Sobe só com `--profile dev-db`; em produção use um banco
+  # externo e aponte DATABASE_URL para ele.
+  postgres:
+    image: postgres:16-alpine
+    container_name: app-postgres
+    restart: unless-stopped
+    profiles: ["dev-db"]
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-app}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-app}
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+    ports: ["${POSTGRES_PORT:-5432}:5432"]
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-app} -d ${POSTGRES_DB:-app}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
   # Aplica as migrations versionadas (Drizzle) e SAI. Usa a mesma imagem do server, mas roda
   # o runner. O `server` só sobe após este sair com sucesso.
   #
-  # Descomente quando o projeto tiver banco (ver apps/server/src/modules/_example/).
+  # Descomente junto com a primeira migration versionada (ver docs/padroes/migrations.md).
   # migrate:
   #   build:
   #     context: ..
@@ -47,7 +70,8 @@ services:
       API_PORT: 3001
       # Origem do web liberada no CORS.
       WEB_ORIGIN: ${WEB_ORIGIN}
-      # DATABASE_URL: ${DATABASE_URL}
+      # Obrigatória: banco externo em produção (ou o serviço `postgres` no profile dev-db).
+      DATABASE_URL: ${DATABASE_URL}
       SWAGGER_ENABLED: ${SWAGGER_ENABLED:-false}
 
   web:
@@ -63,3 +87,6 @@ services:
       NODE_ENV: production
       # Rede interna do compose: o browser NUNCA fala com o server direto — só o BFF do Next.
       API_URL: http://server:3001/api
+
+volumes:
+  postgres-data:
