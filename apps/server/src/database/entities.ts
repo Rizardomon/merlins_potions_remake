@@ -2,10 +2,9 @@
  * Barrel das tabelas Drizzle. O `drizzle.config.ts` lê deste arquivo para descobrir o
  * schema, e o `DatabaseModule` o usa para tipar o cliente.
  *
- * Está vazio de propósito: o template não tem tabelas. Cada domínio novo reexporta aqui
- * a sua `<domain>.entity.ts` — ver `modules/_example/` e `docs/padroes/backend-modulo.md`.
- *
- * Exemplo:
- *   export * from "../modules/role/role.entity";
+ * Cada domínio reexporta aqui a sua `<domain>.entity.ts` — ver `modules/_example/` e
+ * `docs/padroes/backend-modulo.md`.
  */
-export {};
+export * from "../modules/customer/customer.entity";
+export * from "../modules/customer/password-reset-token.entity";
+export * from "../modules/customer/session.entity";

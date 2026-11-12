@@ -9,6 +9,7 @@ export default defineConfig({
       provider: "v8",
       include: [
         "src/modules/product/**/*.ts",
+        "src/modules/customer/**/*.ts",
         "src/conf/configuration.ts",
         "src/database/database.module.ts",
       ],

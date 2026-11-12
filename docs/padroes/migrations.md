@@ -5,9 +5,9 @@ Padrão para versionar e aplicar mudanças de schema no `apps/server`. Substitui
 (`src/database/entities.ts`, barrel dos `*.entity.ts`).
 
 > **A persistência está ligada (MP-002 / ADR-004):** `DATABASE_URL` é obrigatória e o
-> `DatabaseModule` está importado no `app.module.ts`. `entities.ts` ainda está vazio até o
-> primeiro domínio persistido gerar a primeira migration; o passo a passo por domínio está
-> em `apps/server/src/modules/_example/README.md`.
+> `DatabaseModule` está importado no `app.module.ts`. A primeira migration já está
+> versionada (`customer`, `session`, `password_reset_token`); o passo a passo por domínio
+> está em `apps/server/src/modules/_example/README.md`.
 
 ## Postgres em dev e CI
 
