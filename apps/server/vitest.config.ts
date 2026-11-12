@@ -10,6 +10,7 @@ export default defineConfig({
       include: [
         "src/modules/product/**/*.ts",
         "src/modules/customer/**/*.ts",
+        "src/modules/dev/**/*.ts",
         "src/conf/configuration.ts",
         "src/database/database.module.ts",
       ],
