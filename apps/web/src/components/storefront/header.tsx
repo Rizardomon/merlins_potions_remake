@@ -1,9 +1,19 @@
 "use client";
 
 import { useBag } from "@/lib/bag/provider";
+import { useSession, useSignOut } from "@/hooks/use-auth";
 
 export function Header() {
   const { itemCount, openBag } = useBag();
+  const { data: session, isPending } = useSession();
+  const signOut = useSignOut();
+
+  const customer = session?.customer;
+  const isSignedIn = !!customer;
+
+  const handleSignOut = async () => {
+    await signOut.mutateAsync();
+  };
 
   return (
     <header className="w-full max-w-[1280px] mx-auto px-4 sm:px-8 py-5 flex flex-wrap items-center gap-x-8 gap-y-5">
@@ -32,14 +42,35 @@ export function Header() {
       </label>
 
       <div className="ml-auto flex items-center gap-5">
-        {/* Sign in — visual only */}
-        <button
-          type="button"
-          aria-label="Sign in"
-          className="text-[15px] font-medium text-[var(--text-2)] hover:text-[var(--accent)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] rounded"
-        >
-          Sign in
-        </button>
+        {/* Account section */}
+        {!isPending && (isSignedIn ? (
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              aria-label={`Account for ${customer.firstName}`}
+              className="flex items-center gap-2 h-[46px] px-3 rounded-full text-[15px] font-medium text-[var(--text)] hover:bg-[var(--surface)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
+            >
+              <AvatarCircle initial={customer.firstName[0]} />
+              {customer.firstName}
+            </button>
+            <button
+              type="button"
+              onClick={handleSignOut}
+              disabled={signOut.isPending}
+              className="text-[15px] font-medium text-[var(--text-2)] hover:text-[var(--accent)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] rounded disabled:opacity-50"
+            >
+              Sign out
+            </button>
+          </div>
+        ) : (
+          <button
+            type="button"
+            aria-label="Sign in"
+            className="text-[15px] font-medium text-[var(--text-2)] hover:text-[var(--accent)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] rounded"
+          >
+            Sign in
+          </button>
+        ))}
 
         {/* Bag */}
         <button
@@ -59,6 +90,14 @@ export function Header() {
         </button>
       </div>
     </header>
+  );
+}
+
+function AvatarCircle({ initial }: { initial: string }) {
+  return (
+    <div className="flex items-center justify-center w-[30px] h-[30px] rounded-full bg-[var(--accent)] text-[var(--bg)] text-[13px] font-medium">
+      {initial.toUpperCase()}
+    </div>
   );
 }
 

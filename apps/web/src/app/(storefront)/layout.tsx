@@ -7,7 +7,11 @@ import { NewsletterBlock } from "@/components/storefront/newsletter-block";
 import { BagDrawer } from "@/components/storefront/bag-drawer";
 import { AddToBagToast } from "@/components/storefront/add-to-bag-toast";
 import { BagProvider } from "@/lib/bag/provider";
+import { AccountOverlayProvider } from "@/lib/account/provider";
 import { listPotions } from "@/lib/api/product-repository";
+import { fetchFromApi } from "@/lib/bff";
+import { getSessionToken } from "@/lib/bff";
+import type { SessionResponse } from "@merlins-potions-remake/shared";
 
 export default async function StorefrontLayout({
   children,
@@ -15,19 +19,25 @@ export default async function StorefrontLayout({
   children: ReactNode;
 }) {
   const catalog = await listPotions();
+  const sessionToken = await getSessionToken();
+  const initialSession = sessionToken
+    ? await fetchFromApi<SessionResponse>("/auth/session", sessionToken)
+    : null;
 
   return (
-    <BagProvider catalog={catalog}>
-      <div className="min-h-screen flex flex-col">
-        <AnnouncementBar />
-        <Header />
-        <CategoryNav />
-        <main className="flex-1">{children}</main>
-        <NewsletterBlock />
-        <Footer />
-      </div>
-      <BagDrawer />
-      <AddToBagToast />
-    </BagProvider>
+    <AccountOverlayProvider initialSession={initialSession ?? { customer: null }}>
+      <BagProvider catalog={catalog}>
+        <div className="min-h-screen flex flex-col">
+          <AnnouncementBar />
+          <Header />
+          <CategoryNav />
+          <main className="flex-1">{children}</main>
+          <NewsletterBlock />
+          <Footer />
+        </div>
+        <BagDrawer />
+        <AddToBagToast />
+      </BagProvider>
+    </AccountOverlayProvider>
   );
 }
