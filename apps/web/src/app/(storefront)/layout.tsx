@@ -6,6 +6,7 @@ import { Footer } from "@/components/storefront/footer";
 import { NewsletterBlock } from "@/components/storefront/newsletter-block";
 import { BagDrawer } from "@/components/storefront/bag-drawer";
 import { AddToBagToast } from "@/components/storefront/add-to-bag-toast";
+import { AccountOverlay } from "@/components/account/account-overlay";
 import { BagProvider } from "@/lib/bag/provider";
 import { AccountOverlayProvider } from "@/lib/account/provider";
 import { listPotions } from "@/lib/api/product-repository";
@@ -37,6 +38,9 @@ export default async function StorefrontLayout({
         </div>
         <BagDrawer />
         <AddToBagToast />
+        <AccountOverlay>
+          {/* Form content will be placed here by child routes */}
+        </AccountOverlay>
       </BagProvider>
     </AccountOverlayProvider>
   );

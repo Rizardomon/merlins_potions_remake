@@ -11,6 +11,13 @@ vi.mock("@/lib/bag/provider", () => ({
   }),
 }));
 
+vi.mock("@/lib/account/provider", () => ({
+  useAccountOverlay: () => ({
+    openOverlay: vi.fn(),
+    triggerRef: { current: null },
+  }),
+}));
+
 const mockUseSession = vi.hoisted(() => vi.fn());
 const mockUseSignOut = vi.hoisted(() => vi.fn());
 

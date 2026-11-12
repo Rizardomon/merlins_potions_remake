@@ -2,17 +2,23 @@
 
 import { useBag } from "@/lib/bag/provider";
 import { useSession, useSignOut } from "@/hooks/use-auth";
+import { useAccountOverlay } from "@/lib/account/provider";
 
 export function Header() {
   const { itemCount, openBag } = useBag();
   const { data: session, isPending } = useSession();
   const signOut = useSignOut();
+  const { openOverlay, triggerRef } = useAccountOverlay();
 
   const customer = session?.customer;
   const isSignedIn = !!customer;
 
   const handleSignOut = async () => {
     await signOut.mutateAsync();
+  };
+
+  const handleSignInClick = () => {
+    openOverlay();
   };
 
   return (
@@ -64,7 +70,9 @@ export function Header() {
           </div>
         ) : (
           <button
+            ref={triggerRef}
             type="button"
+            onClick={handleSignInClick}
             aria-label="Sign in"
             className="text-[15px] font-medium text-[var(--text-2)] hover:text-[var(--accent)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] rounded"
           >
