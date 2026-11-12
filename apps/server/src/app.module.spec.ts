@@ -1,6 +1,10 @@
 import { Test } from "@nestjs/testing";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { DRIZZLE } from "./database/database.module";
+import {
+  CUSTOMER_REPOSITORY,
+  DrizzleCustomerRepository,
+} from "./modules/customer/customer.repository";
 
 const originalDatabaseUrl = process.env.DATABASE_URL;
 
@@ -26,6 +30,7 @@ describe("AppModule", () => {
     }).compile();
 
     expect(moduleRef.get(DRIZZLE)).toBeDefined();
+    expect(moduleRef.get(CUSTOMER_REPOSITORY)).toBeInstanceOf(DrizzleCustomerRepository);
 
     await moduleRef.close();
   });

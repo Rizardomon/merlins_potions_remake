@@ -14,7 +14,7 @@
     "db:studio": "drizzle-kit studio",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "test:integration": "vitest run src/database/database.integration.spec.ts src/modules/customer/customer.migration.integration.spec.ts"
+    "test:integration": "vitest run src/database/database.integration.spec.ts src/modules/customer/customer.migration.integration.spec.ts src/modules/customer/customer.repository.integration.spec.ts"
   },
   "dependencies": {
     "@merlins-potions-remake/shared": "workspace:*",
